@@ -7,7 +7,7 @@ const database = require("./util/database");
 const app = express();
 
 database.connect();
-
+const apss = "asdas";
 // Configure static folder
 app.use(express.static(path.join(__dirname, "public")));
 

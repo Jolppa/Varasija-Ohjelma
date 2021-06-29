@@ -1,7 +1,6 @@
 const router = require("express").Router();
+const parser = require("../controllers/parser");
 
-router.get("/", (req, res, next) => {
-  res.render("index", { layout: false });
-});
+router.get("/", parser.updateData);
 
 module.exports = router;

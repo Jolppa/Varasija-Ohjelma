@@ -110,6 +110,7 @@
     "wordwrap": "^1.0.0",
     "wrappy": "^1.0.2",
     "ws": "^7.4.6",
+    "xlsx": "^0.17.0",
     "yauzl": "^2.10.0"
   },
   "devDependencies": {},

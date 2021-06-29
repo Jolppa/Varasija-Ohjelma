@@ -4,7 +4,7 @@ const path = require("path");
 const downloads_Dir = path.resolve(__dirname, "../", "downloads");
 
 exports.updateData = async (req, res, next) => {
-  const browser = await puppeteer.launch({ devtools: true });
+  const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.goto(
     "https://vipunen.fi/fi-fi/_layouts/15/xlviewer.aspx?id=/fi-fi/Raportit/Haku%20ja%20valinta%20-%20korkeakoulu%20%20-%20live.xlsb",
@@ -21,23 +21,46 @@ exports.updateData = async (req, res, next) => {
   await page.mouse.click(rect.x, rect.y);
   await page.mouse.click(rect.x, rect.y, { clickCount: 2, delay: 300 });
 
-  await page.$$eval(".ewr-glcontainer-ltr", (elems) => {
-    console.log(elems);
-  });
-  //   await page.$$eval("#gridRows > .ewr-nglr", (elems) => {
-  //     elems[elems.length - 1].scrollIntoView({ behavior: "smooth" });
-  //     console.log(elems[elems.length - 1]);
-  //   });
-  //! Scroll down
+  await page.waitForTimeout(3000);
 
-  await page.waitForTimeout(600000);
+  rect = await page.$$eval(".ewr-glcontainer-ltr", (elems) => {
+    // console.log(elems);
+    let elem = elems[1].children[elems[1].children.length - 1];
+    // console.log(elem);
+    elem.scrollIntoView();
+    const { x, y } = elem.getBoundingClientRect();
+    // let clickEvent = document.createEvent("MouseEvents");
+    // clickEvent.initEvent("dblclick", true, true);
+    // elems[1].children[elems[1].children.length - 9].dispatchEvent(clickEvent);
+    return { x, y };
+  });
+  await page.waitForTimeout(3000);
+
+  rect = await page.$$eval(".ewr-glcontainer-ltr", (elems) => {
+    console.log(elems);
+    let elem = elems[1].children[elems[1].children.length - 7];
+    console.log(elem);
+    const { x, y } = elem.getBoundingClientRect();
+    // let clickEvent = document.createEvent("MouseEvents");
+    // clickEvent.initEvent("dblclick", true, true);
+    // elems[1].children[elems[1].children.length - 9].dispatchEvent(clickEvent);
+    return { x, y };
+  });
+
+  await page.mouse.click(rect.x, rect.y);
+  await page.mouse.click(rect.x, rect.y, { clickCount: 2, delay: 100 });
+  await page.mouse.click(rect.x, rect.y, { clickCount: 2, delay: 100 });
+
+  // await page.waitForTimeout(600000);
 
   await page._client.send("Page.setDownloadBehavior", {
     behavior: "allow",
     downloadPath: downloads_Dir,
   });
+  await page.waitForTimeout(2000);
   await page.waitForSelector("[title='Asetukset']");
-  await page.click("[title='Asetukset']");
+  await page.click("[title='Asetukset']", { clickCount: 2, delay: 500 });
+  await page.waitForTimeout(2000);
   await page.waitForSelector(
     "#m_excelWebRenderer_nov_ewaCtl_miDownloadASnapshot"
   );
@@ -49,9 +72,9 @@ exports.updateData = async (req, res, next) => {
   );
   let sheetName = workBook.SheetNames[0];
   let workSheet = workBook.Sheets[sheetName];
-  //   let paikkoja_jäljellä = workSheet["B103"];
-  //   console.log(paikkoja_jäljellä.v);
-  //   console.log(workSheet);
+  let paikkoja_jäljellä = workSheet["B103"].v - workSheet["F103"].v;
+  console.log(`Paikkoja jäljellä: ${paikkoja_jäljellä}`);
+  // console.log(workSheet);
 
   //   console.log(test);
   await page.waitForTimeout(6000000);

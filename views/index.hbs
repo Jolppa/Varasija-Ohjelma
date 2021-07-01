@@ -13,10 +13,14 @@
   <body>
     <div class="mask hidden">
       <div class="statusBox">
-        Refreshing Data, Please Wait...
-        <span class="material-icons">
-          refresh
-        </span>
+        <p>
+          Refreshing Data, Please Wait...
+          <span class="material-icons">
+            refresh
+          </span>
+        </p>
+        <br />
+        <h3>Remember to verify yourself from your OP App!</h3>
       </div>
     </div>
     <div class="container">
@@ -29,6 +33,12 @@
       <h1 class="paikka">Paikkoja jäljellä:
         {{#if paikkoja_jäljellä}}{{paikkoja_jäljellä}}{{else}}EI DATAA{{/if}}</h1>
     </div>
+    {{#if error}}
+      <div class="errorContainer">
+        <h1>ERROR</h1>
+        <h1 class="errorMsg">{{error}}</h1>
+      </div>
+    {{/if}}
     <script src="./js/display.js"></script>
   </body>
 </html>

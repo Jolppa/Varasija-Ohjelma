@@ -2,14 +2,26 @@ const puppeteer = require("puppeteer");
 const XLSX = require("xlsx");
 const path = require("path");
 const downloads_Dir = path.resolve(__dirname, "../", "downloads");
+const Data = require("../models/Data");
 
-exports.updateData = async (req, res, next) => {
+exports.getIndex = async (req, res, next) => {
+  res.render("index", { layout: false });
+};
+
+exports.refreshData = async (req, res, next) => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
+  let data = Data.find({});
+  console.log(data);
+  // Parse Opintopolku
+
+  // Parse xlsb
   await page.goto(
     "https://vipunen.fi/fi-fi/_layouts/15/xlviewer.aspx?id=/fi-fi/Raportit/Haku%20ja%20valinta%20-%20korkeakoulu%20%20-%20live.xlsb",
     { waitUntil: "load" }
   );
+
+  console.log("Fetching data...");
 
   await page.waitForTimeout(14000);
 
@@ -24,14 +36,9 @@ exports.updateData = async (req, res, next) => {
   await page.waitForTimeout(3000);
 
   rect = await page.$$eval(".ewr-glcontainer-ltr", (elems) => {
-    // console.log(elems);
     let elem = elems[1].children[elems[1].children.length - 1];
-    // console.log(elem);
     elem.scrollIntoView();
     const { x, y } = elem.getBoundingClientRect();
-    // let clickEvent = document.createEvent("MouseEvents");
-    // clickEvent.initEvent("dblclick", true, true);
-    // elems[1].children[elems[1].children.length - 9].dispatchEvent(clickEvent);
     return { x, y };
   });
   await page.waitForTimeout(3000);
@@ -41,17 +48,12 @@ exports.updateData = async (req, res, next) => {
     let elem = elems[1].children[elems[1].children.length - 7];
     console.log(elem);
     const { x, y } = elem.getBoundingClientRect();
-    // let clickEvent = document.createEvent("MouseEvents");
-    // clickEvent.initEvent("dblclick", true, true);
-    // elems[1].children[elems[1].children.length - 9].dispatchEvent(clickEvent);
     return { x, y };
   });
 
   await page.mouse.click(rect.x, rect.y);
   await page.mouse.click(rect.x, rect.y, { clickCount: 2, delay: 100 });
   await page.mouse.click(rect.x, rect.y, { clickCount: 2, delay: 100 });
-
-  // await page.waitForTimeout(600000);
 
   await page._client.send("Page.setDownloadBehavior", {
     behavior: "allow",
@@ -74,10 +76,7 @@ exports.updateData = async (req, res, next) => {
   let workSheet = workBook.Sheets[sheetName];
   let paikkoja_jäljellä = workSheet["B103"].v - workSheet["F103"].v;
   console.log(`Paikkoja jäljellä: ${paikkoja_jäljellä}`);
-  // console.log(workSheet);
 
-  //   console.log(test);
-  await page.waitForTimeout(6000000);
-  //   await browser.close();
-  res.render("index", { layout: false });
+  await browser.close();
+  res.render("index", { layout: false, paikkoja_jäljellä });
 };

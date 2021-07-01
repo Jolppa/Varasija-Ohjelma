@@ -7,12 +7,16 @@ const database = require("./util/database");
 const app = express();
 
 database.connect();
+
 // Configure static folder
 app.use(express.static(path.join(__dirname, "public")));
 
+// Configure template engine
 app.engine(".hbs", exphbs({ extname: ".hbs" }));
 app.set("view engine", ".hbs");
 
-app.use("/", require("./routes/routes"));
+// Routes
+app.use("/", require("./routes/indexRoutes"));
+app.use("/refresh", require("./routes/dataRoutes"));
 
 app.listen(process.env.PORT, () => console.log("Server Running..."));

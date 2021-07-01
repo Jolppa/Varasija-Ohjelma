@@ -1,3 +1,57 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;700&display=swap");
+
 body {
-  background-color: red;
+  background-color: rgb(220, 220, 220);
+  font-family: "Roboto";
+}
+
+.container {
+  /* display: flex; */
+  align-items: center;
+  margin: auto;
+  justify-content: center;
+  text-align: center;
+  margin-top: 40px;
+}
+
+.mask {
+  background-color: white;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  opacity: 0.5;
+  display: flex;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.statusBox {
+  display: flex;
+  background-color: black;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  width: 500px;
+  height: 200px;
+  border-radius: 25px;
+  color: white;
+}
+
+.statusBox > span {
+  animation: rotation 2s infinite linear;
+  margin-left: 10px;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

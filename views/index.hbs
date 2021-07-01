@@ -23,12 +23,11 @@
       <h3>
         <a href="/refresh">PÄIVITÄ</a>
       </h3>
-      <h1>Olet varasijalla:
-        <h1 class="varasija">{{varasija}}</h1>
-      </h1>
-      <h1>Paikkoja jäljellä:
-        <h1 class="paikka">{{paikkoja_jäljellä}}</h1>
-      </h1>
+
+      <h1 class="varasija">Olet varasijalla:
+        {{#if varasija}}{{varasija}}{{else}}EI DATAA{{/if}}</h1>
+      <h1 class="paikka">Paikkoja jäljellä:
+        {{#if paikkoja_jäljellä}}{{paikkoja_jäljellä}}{{else}}EI DATAA{{/if}}</h1>
     </div>
     <script src="./js/display.js"></script>
   </body>

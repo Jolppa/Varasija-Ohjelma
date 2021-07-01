@@ -32,6 +32,8 @@ body {
 
 .statusBox {
   display: flex;
+  z-index: 110;
+  flex-direction: column;
   background-color: black;
   justify-content: center;
   align-items: center;
@@ -42,16 +44,27 @@ body {
   color: white;
 }
 
-.statusBox > span {
+.errorContainer {
+  text-align: center;
+}
+
+.errorMsg {
+  color: red;
+}
+
+.statusBox > p > span {
   animation: rotation 2s infinite linear;
   margin-left: 10px;
 }
 
+.statusBox > h3 {
+  color: rgb(255, 0, 0);
+}
 @keyframes rotation {
   from {
     transform: rotate(0deg);
   }
   to {
-    transform: rotate(360deg);
+    transform: rotate(359deg);
   }
 }

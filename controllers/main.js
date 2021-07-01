@@ -1,7 +1,12 @@
 const puppeteer = require("puppeteer");
 const XLSX = require("xlsx");
 const path = require("path");
-const downloads_Dir = path.resolve(__dirname, "../", "downloads");
+const downloads_Dir = path.resolve(
+  __dirname,
+  "../",
+  "downloads",
+  "Spreadsheet"
+);
 const Data = require("../models/Data");
 
 exports.getIndex = async (req, res, next) => {
@@ -9,11 +14,55 @@ exports.getIndex = async (req, res, next) => {
 };
 
 exports.refreshData = async (req, res, next) => {
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({ devtools: true });
   const page = await browser.newPage();
-  let data = Data.find({});
+  let data = await Data.find({});
   console.log(data);
   // Parse Opintopolku
+  // console.log(JSON.parse(process.env.OP_KEYS));
+
+  const login_btn =
+    "#content > div.Selection__flex-container___3uq7T > div:nth-child(1) > div.SelectionItem__link-container___33-f4 > a";
+  const avainlukulista_btn =
+    "#opidentityprovider-container > section > form > div:nth-child(1) > div.ds-form-row__item.ds-col.ds-col--sm-8 > div > div:nth-child(2) > label";
+  await page.goto("https://opintopolku.fi/oma-opintopolku/");
+  await page.waitForSelector(
+    "#cookie-modal-content > div:nth-child(6) > button:nth-child(1)"
+  );
+  await page.click(
+    "#cookie-modal-content > div:nth-child(6) > button:nth-child(1)"
+  );
+  await page.waitForSelector(login_btn);
+  await page.click(login_btn);
+  await page.waitForSelector("#osuuspankki");
+  await page.click("#osuuspankki");
+  await page.waitForSelector("#auth-device-userid-mobilekey");
+  await page.focus("#auth-device-userid-mobilekey");
+  await page.type("#auth-device-userid-mobilekey", process.env.OP_USERNAME);
+  await page.click("#auth-device-submit-mobilekey");
+
+  // try / catch here
+  try {
+    await page.waitForSelector("#continue-button");
+  } catch (err) {
+    await browser.close();
+    console.log("in catch");
+    res.render("index", {
+      error: "You didn't verify yourself from the OP App! Please try again...",
+    });
+  }
+
+  //! Will add my keys later so I don't have to verify myself from my phone everytime
+  // {
+  //   await page.waitForSelector(avainlukulista_btn);
+  //   await page.click(avainlukulista_btn);
+  //   await page.focus("#auth-device-userid-kr");
+  //   await page.type("#auth-device-userid-kr", process.env.OP_USERNAME);
+  //   await page.focus("#auth-device-password-kr");
+  //   await page.type("#auth-device-password-kr", process.env.OP_PASSWORD);
+  // }
+
+  await page.waitForTimeout(600000);
 
   // Parse xlsb
   await page.goto(

@@ -103,4 +103,6 @@ dist
 # TernJS port file
 .tern-port
 util/secrets.env
+downloads/Spreadsheet
 downloads/Haku ja valinta - korkeakoulu  - live.xlsb
+downloads/Spreadsheet/Haku ja valinta - korkeakoulu  - live.xlsb

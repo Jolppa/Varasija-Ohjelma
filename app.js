@@ -19,4 +19,9 @@ app.set("view engine", ".hbs");
 app.use("/", require("./routes/indexRoutes"));
 app.use("/refresh", require("./routes/dataRoutes"));
 
+app.use((error, req, res, next) => {
+  console.log("in error middleware");
+  res.render("index", { layout: false, error });
+});
+
 app.listen(process.env.PORT, () => console.log("Server Running..."));

@@ -29,14 +29,17 @@
       </h3>
 
       <h1 class="varasija">Olet varasijalla:
-        {{#if varasija}}{{varasija}}{{else}}EI DATAA{{/if}}</h1>
+        {{#if data}}{{data.varasija}}{{else}}EI DATAA{{/if}}</h1>
       <h1 class="paikka">Paikkoja jäljellä:
-        {{#if paikkoja_jäljellä}}{{paikkoja_jäljellä}}{{else}}EI DATAA{{/if}}</h1>
+        {{#if data}}{{data.paikkoja_jäljellä}}{{else}}EI DATAA{{/if}}</h1>
+      <h3 class="päivitetty">viimeksi päivitetty:
+        {{#if data}}{{data.päivämäärä}}{{else}}EI DATAA{{/if}}
+      </h3>
     </div>
     {{#if error}}
       <div class="errorContainer">
         <h1>ERROR</h1>
-        <h1 class="errorMsg">{{error.custom_msg}}</h1>
+        <h1 class="errorMsg">{{error.message}}</h1>
       </div>
     {{/if}}
     <script src="./js/display.js"></script>

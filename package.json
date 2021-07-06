@@ -21,6 +21,7 @@
     "content-type": "^1.0.4",
     "cookie": "^0.4.0",
     "cookie-signature": "^1.0.6",
+    "dateformat": "^4.5.1",
     "debug": "^2.6.9",
     "depd": "^1.1.2",
     "destroy": "^1.0.4",

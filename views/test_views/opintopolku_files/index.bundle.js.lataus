@@ -1,0 +1,3474 @@
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// install a JSONP callback for chunk loading
+/******/ 	function webpackJsonpCallback(data) {
+/******/ 		var chunkIds = data[0];
+/******/ 		var moreModules = data[1];
+/******/ 		var executeModules = data[2];
+/******/
+/******/ 		// add "moreModules" to the modules object,
+/******/ 		// then flag all "chunkIds" as loaded and fire callback
+/******/ 		var moduleId, chunkId, i = 0, resolves = [];
+/******/ 		for(;i < chunkIds.length; i++) {
+/******/ 			chunkId = chunkIds[i];
+/******/ 			if(installedChunks[chunkId]) {
+/******/ 				resolves.push(installedChunks[chunkId][0]);
+/******/ 			}
+/******/ 			installedChunks[chunkId] = 0;
+/******/ 		}
+/******/ 		for(moduleId in moreModules) {
+/******/ 			if(Object.prototype.hasOwnProperty.call(moreModules, moduleId)) {
+/******/ 				modules[moduleId] = moreModules[moduleId];
+/******/ 			}
+/******/ 		}
+/******/ 		if(parentJsonpFunction) parentJsonpFunction(data);
+/******/
+/******/ 		while(resolves.length) {
+/******/ 			resolves.shift()();
+/******/ 		}
+/******/
+/******/ 		// add entry modules from loaded chunk to deferred list
+/******/ 		deferredModules.push.apply(deferredModules, executeModules || []);
+/******/
+/******/ 		// run deferred modules when all chunks ready
+/******/ 		return checkDeferredModules();
+/******/ 	};
+/******/ 	function checkDeferredModules() {
+/******/ 		var result;
+/******/ 		for(var i = 0; i < deferredModules.length; i++) {
+/******/ 			var deferredModule = deferredModules[i];
+/******/ 			var fulfilled = true;
+/******/ 			for(var j = 1; j < deferredModule.length; j++) {
+/******/ 				var depId = deferredModule[j];
+/******/ 				if(installedChunks[depId] !== 0) fulfilled = false;
+/******/ 			}
+/******/ 			if(fulfilled) {
+/******/ 				deferredModules.splice(i--, 1);
+/******/ 				result = __webpack_require__(__webpack_require__.s = deferredModule[0]);
+/******/ 			}
+/******/ 		}
+/******/ 		return result;
+/******/ 	}
+/******/
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// object to store loaded and loading chunks
+/******/ 	// undefined = chunk not loaded, null = chunk preloaded/prefetched
+/******/ 	// Promise = chunk loading, 0 = chunk loaded
+/******/ 	var installedChunks = {
+/******/ 		1: 0
+/******/ 	};
+/******/
+/******/ 	var deferredModules = [];
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "/omatsivut/";
+/******/
+/******/ 	var jsonpArray = window["webpackJsonp"] = window["webpackJsonp"] || [];
+/******/ 	var oldJsonpFunction = jsonpArray.push.bind(jsonpArray);
+/******/ 	jsonpArray.push = webpackJsonpCallback;
+/******/ 	jsonpArray = jsonpArray.slice();
+/******/ 	for(var i = 0; i < jsonpArray.length; i++) webpackJsonpCallback(jsonpArray[i]);
+/******/ 	var parentJsonpFunction = oldJsonpFunction;
+/******/
+/******/
+/******/ 	// add entry module to deferred list
+/******/ 	deferredModules.push([141,0]);
+/******/ 	// run deferred modules when ready
+/******/ 	return checkDeferredModules();
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ 141:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+
+// EXTERNAL MODULE: ./node_modules/babel-polyfill/lib/index.js
+var lib = __webpack_require__(382);
+
+// EXTERNAL MODULE: ./node_modules/angular/index.js
+var node_modules_angular = __webpack_require__(51);
+var angular_default = /*#__PURE__*/__webpack_require__.n(node_modules_angular);
+
+// EXTERNAL MODULE: ./node_modules/angular-resource/index.js
+var angular_resource = __webpack_require__(140);
+var angular_resource_default = /*#__PURE__*/__webpack_require__.n(angular_resource);
+
+// EXTERNAL MODULE: ./node_modules/angular-sanitize/index.js
+var angular_sanitize = __webpack_require__(139);
+var angular_sanitize_default = /*#__PURE__*/__webpack_require__.n(angular_sanitize);
+
+// EXTERNAL MODULE: ./node_modules/angular-animate/index.js
+var angular_animate = __webpack_require__(138);
+var angular_animate_default = /*#__PURE__*/__webpack_require__.n(angular_animate);
+
+// EXTERNAL MODULE: ./node_modules/angular-cookies/index.js
+var angular_cookies = __webpack_require__(137);
+var angular_cookies_default = /*#__PURE__*/__webpack_require__.n(angular_cookies);
+
+// EXTERNAL MODULE: ./node_modules/angular-ui-bootstrap/src/typeahead/index.js
+var typeahead = __webpack_require__(136);
+var typeahead_default = /*#__PURE__*/__webpack_require__.n(typeahead);
+
+// EXTERNAL MODULE: ./src/main/less/main.less
+var main = __webpack_require__(165);
+
+// EXTERNAL MODULE: ./src/main/less/hakutoiveidenMuokkaus.less
+var hakutoiveidenMuokkaus = __webpack_require__(164);
+
+// EXTERNAL MODULE: ./src/main/less/preview.less
+var preview = __webpack_require__(163);
+
+// EXTERNAL MODULE: ./node_modules/js-cookie/src/js.cookie.js
+var js_cookie = __webpack_require__(135);
+var js_cookie_default = /*#__PURE__*/__webpack_require__.n(js_cookie);
+
+// CONCATENATED MODULE: ./src/main/js/constants.js
+const VASTAANOTTOTILA = {
+  VASTAANOTTANUT_SITOVASTI: "VASTAANOTTANUT_SITOVASTI",
+  EI_VASTAANOTETTU_MAARA_AIKANA: "EI_VASTAANOTETTU_MAARA_AIKANA",
+  EHDOLLISESTI_VASTAANOTTANUT: "EHDOLLISESTI_VASTAANOTTANUT"
+};
+
+const VASTAANOTTO_ACTION = {
+  VASTAANOTA_SITOVASTI: "VastaanotaSitovasti",
+  VASTAANOTA_EHDOLLISESTI: "VastaanotaEhdollisesti",
+  PERU: "Peru"
+};
+
+const urls = {
+  "omatsivut.translations": "/omatsivut/translations",
+};
+
+// CONCATENATED MODULE: ./src/main/js/staticResources.js
+
+
+
+async function init() {
+  const language = getLanguage();
+  document.documentElement.lang = language;
+  try {
+    let translations = await loadTranslations(language);
+    window.translations = translations;
+  } catch (err) {
+    console.error(err);
+    throw new Error("Error in init(): failed to await loadTranslations: " + err);
+  }
+
+  if (window.translations === undefined) {
+    throw new Error("Error in init(): loadTranslations() returned undefined. language: " + language);
+  }
+}
+
+function getLanguage() {
+  let lang = js_cookie_default.a.get('lang');
+  if (lang) {
+    return lang;
+  }
+
+  return getLanguageFromHost();
+}
+
+function getTranslations() {
+  return window.translations;
+}
+
+function loadTranslations(language) {
+  const url = urls["omatsivut.translations"] + '?lang=' + language;
+  const headers = new Headers({
+    'Caller-Id': '1.2.246.562.10.00000000001.omatsivut.frontend'
+  });
+  const request = new Request(url, {
+    method: 'GET',
+    headers: headers
+  });
+  return fetch(request)
+    .then(response => {
+      if (response.status === 200) {
+        return response.json();
+      } else {
+        throw new Error("Bad response from " + url + ": " + response);
+      }
+    })
+    .then(translations => translations)
+    .catch(err => {
+        console.error(err);
+        throw new Error("Failed to load translations from " + url + ": " + err);
+      });
+}
+
+function getLanguageFromHost(host) {
+  if (!host) { host = document.location.host; }
+
+  let parts = host.split('.');
+  if (parts.length < 2) {
+    return 'fi';
+  }
+
+  let domain = parts[parts.length - 2];
+  if (domain.indexOf('opintopolku') > -1) {
+    return 'fi';
+  } else if (domain.indexOf('studieinfo') > -1) {
+    return 'sv';
+  } else if (domain.indexOf('studyinfo') > -1) {
+    return 'en'
+  }
+  return 'fi'
+}
+
+// CONCATENATED MODULE: ./src/main/js/util.js
+const BEARER_TOKEN_KEY = 'bearerToken';
+const _ = __webpack_require__(18);
+
+function mapArray(array, keyField, valueField) {
+  return _.reduce(array, function (memo, item) {
+    var key = item[keyField]
+    if (memo[key] == null)
+      memo[key] = []
+    memo[key].push(item[valueField])
+    return memo
+  }, {});
+}
+
+function indexBy(array, keyFunction) {
+  return _.reduce(array, function (memo, item, index) {
+    memo[keyFunction(item, index)] = item
+    return memo
+  }, {})
+}
+
+function flattenTree(rootNode, childrenAttribute) {
+  return (function flatten(node, list) {
+    if (node != null) {
+      if (node[childrenAttribute] == null)
+        list.push(node)
+      else
+        _(node[childrenAttribute]).each(function (subnode) {
+          flatten(subnode, list)
+        })
+    }
+    return list
+  })(rootNode, [])
+}
+
+function underscoreToCamelCase(str) {
+  return str.toLowerCase().replace(/^(.)|_(.)/g, function (match, char1, char2) {
+    return (char1 ? char1 : "" + char2 ? char2 : "").toUpperCase()
+  })
+}
+
+function withoutAngularFields(obj) {
+  if (_.isArray(obj)) {
+    return _(obj).map(withoutAngularFields)
+  } else if (_.isObject(obj)) {
+    return _(obj).reduce(function (memo, val, key) {
+      if (key.indexOf("$$") < 0)
+        memo[key] = withoutAngularFields(val)
+      return memo
+    }, {})
+  } else
+    return obj
+}
+
+function getBearerToken() {
+  return window.sessionStorage.getItem(BEARER_TOKEN_KEY)
+}
+function setBearerToken(token) {
+  window.sessionStorage.setItem(BEARER_TOKEN_KEY, token)
+}
+function removeBearerToken() {
+  window.sessionStorage.removeItem(BEARER_TOKEN_KEY)
+}
+
+function isTestMode() {
+  return window.parent.location.href.indexOf("runner.html") > 0;
+}
+
+
+
+// CONCATENATED MODULE: ./src/main/js/models/question.js
+
+const question_ = __webpack_require__(18);
+
+const questionDefaults = {
+  help: "",
+  verboseHelp: "",
+  required: false,
+  questionType: "",
+  id: null,
+  title: ""
+}
+
+function params(obj) {
+  var questionParameters = question_.extend({}, questionDefaults, obj)
+  question_(questionParameters).each(function(val, key) {
+    if (val == null)
+      if(key == "title") {
+        questionParameters.title = "?"
+      }
+      else {
+        throw new Error("question parameter " + key + " null")
+      }
+  })
+  return questionParameters
+}
+
+class question_Question {
+  constructor(question, answer, validationErrors) {
+    question_.extend(this, params(question))
+    this.answer = answer
+    this.errors = validationErrors || []
+  }
+
+  setErrors(errors) {
+    this.errors = errors || []
+  }
+
+  appendErrors(errors) {
+    this.errors = this.errors.concat(errors)
+  }
+
+  static fromJson(json, application) {
+    return new question_Question(json, initialValue(json, application), json.required ? ["*"] : [])
+  }
+
+  static getQuestions(jsonQuestions, application) {
+    return convertToItems(jsonQuestions, new QuestionGroup())
+
+    function convertToItems(questions, results) {
+      question_(questions).each(function (questionNode) {
+        if (questionNode.questions != null) {
+          results.questionNodes.push(convertToItems(questionNode.questions, new QuestionGroup(questionNode.title)))
+        } else {
+          results.questionNodes.push(question_Question.fromJson(questionNode, application))
+        }
+      })
+      return results
+    }
+  }
+
+  static questionMap(questions) {
+    questions = flattenTree(questions, "questionNodes")
+    return indexBy(questions, function(node) { return node.id.questionId })
+  }
+
+}
+
+function initialValue(question, application) {
+  function defaultValue() {
+    var defaultOption = question_(question.options).find(function(option) { return option.default })
+    return defaultOption == null ? "" : defaultOption.value
+  }
+  function getOldValue(questionId) {
+    var questionIdParts = /^(preference)(\d+)([-_].+)/.exec(questionId)
+    if (questionIdParts != null && application.hakutoiveet[questionIdParts[2] - 1] != null && application.hakutoiveet[questionIdParts[2] - 1].isNew) {
+      return null
+    }
+    var phaseAnswers = application.persistedAnswers[question.id.phaseId]
+    if(phaseAnswers == null) {
+      return null
+    }
+    return phaseAnswers[questionId]
+  }
+
+  var oldAnswer = getOldValue(question.id.questionId)
+  if (question.options != null) {
+    if (question.questionType == "Checkbox") {
+      return question_(question.options).chain().map(function(option) {
+        oldAnswer = getOldValue(option.value)
+        return [option.value, oldAnswer == null ? false : Boolean(oldAnswer)]
+      }).object().value()
+    } else {
+      // Aseta default-arvo vain monivalinnoille
+      return oldAnswer == null ? defaultValue() : oldAnswer
+    }
+  }
+  if(oldAnswer != null) {
+    return  oldAnswer
+  }
+}
+
+class QuestionGroup {
+  constructor(title) {
+    this.title = title
+    this.questionNodes = []
+  }
+}
+
+// CONCATENATED MODULE: ./src/main/js/services/applicationValidator.js
+
+
+/* harmony default export */ var services_applicationValidator = (["restResources", function(restResources) {
+  return function applicationValidator() {
+    var currentRequest
+
+    function onlyIfCurrentRequest(current, f) {
+      return function() {
+        if (currentRequest === current)
+          f.apply(this, arguments)
+      }
+    }
+
+    return function(application, beforeBackendValidation, success, error) {
+      currentRequest = {}
+      success = onlyIfCurrentRequest(currentRequest, success)
+      error = onlyIfCurrentRequest(currentRequest, error)
+
+      var preferencesValid = application.validatePreferences()
+      if (preferencesValid) {
+        beforeBackendValidation()
+        validateBackend(application, success, error)
+      } else {
+        error({
+          errors: []
+        })
+      }
+    }
+  }
+
+  function validateBackend(application, success, error) {
+    restResources.validate(application)
+      .then(response => {
+        const data = response.data;
+        if (data.errors.length === 0) {
+          success({
+            questions: question_Question.getQuestions(data.questions, application),
+            response: data
+          })
+        } else {
+          error({
+            statusCode: 200,
+            errors: data.errors,
+            questions: question_Question.getQuestions(data.questions, application),
+            response: data
+          })
+        }
+      }, response => {
+        error({
+          errors: [],
+          statusCode: response.status,
+          isSaveable: true,
+          response: response.data
+        })
+      })
+  }
+}]);
+
+// EXTERNAL MODULE: ./node_modules/baconjs/dist/Bacon.js
+var Bacon = __webpack_require__(99);
+var Bacon_default = /*#__PURE__*/__webpack_require__.n(Bacon);
+
+// CONCATENATED MODULE: ./src/main/js/services/angularBacon.js
+
+
+/* harmony default export */ var services_angularBacon = (function () {
+  return {
+    watch: function(scope, expression) {
+      let stream = new Bacon_default.a.Bus();
+      scope.$watch(expression, function(val, prevVal) { if (val !== prevVal) stream.push(val) });
+      return stream
+    },
+
+    resource: function(resource) {
+      return function(queryParams, body) {
+        return Bacon_default.a.fromNodeCallback(function (callback) {
+          resource(queryParams, body, success, error);
+
+          function success(value) {
+            callback(null, value)
+          }
+
+          function error(response) {
+            callback(response)
+          }
+        })
+      }
+    }
+  }
+});
+
+// CONCATENATED MODULE: ./src/main/js/localization.js
+
+const localization_ = __webpack_require__(18);
+
+function getValue(obj, path) {
+  const parts = path.split(".");
+  return parts.reduce((memo, val) => {
+    return memo == null ? null : memo[val];
+  }, obj)
+}
+
+function replaceVars(value, vars) {
+  const NON_BREAKING_SPACE = "\u00A0";
+  return localization_.reduce(vars, (memo, val, key) => {
+    return memo.replace("__" + key + "__", val)
+  }, value).replace(/_/g, NON_BREAKING_SPACE)
+}
+
+function localize(key, vars) {
+  const translations = getTranslations();
+  const val = getValue(translations, key);
+  if (!val) {
+    throw new Error("no translation for " + key + ", language: " + getLanguage() + ", translations: " + JSON.stringify(translations));
+  } else {
+    return replaceVars(val, vars || {});
+  }
+}
+
+// CONCATENATED MODULE: ./src/main/js/restResources.js
+/* harmony default export */ var js_restResources = (["$resource", "$http", function($resource, $http) {
+  return {
+    applications: $resource(window.url("omatsivut.applications"), null, {
+      get: {
+        method: "GET",
+        isArray: false
+      },
+      "update": {
+        method: "PUT",
+        url: window.url("omatsivut.applications.update")
+      }
+    }),
+
+    validate: function(application) {
+      return $http.post(window.url( "omatsivut.applications.validate", application.oid), application.toJson())
+    },
+
+    vastaanota: $resource(window.url("omatsivut.applications.vastaanota"), null, {
+      "post": {
+        method: "POST",
+        url: window.url("omatsivut.applications.vastaanota.post")
+      }
+    }),
+
+    postOffice: $resource(window.url("omatsivut.postitoimipaikka")),
+    koulutukset: $resource(window.url("omatsivut.koulutukset")),
+    opetuspisteet: $resource(window.url("omatsivut.opetuspisteet")),
+    lasnaoloilmoittautuminen: $resource(window.url("omatsivut.lasnaoloilmoittautuminen"))
+  }
+}]);
+
+// CONCATENATED MODULE: ./src/main/js/settings.js
+
+
+/* harmony default export */ var js_settings = (["$animate", function($animate) {
+  if (isTestMode()) $animate.enabled(false);
+  return {
+    uiTransitionTime: isTestMode() ? 0 : 500,
+    modelDebounce: isTestMode() ? 0 : 300,
+    uiIndicatorDebounce: isTestMode() ? 0: 500
+  };
+}]);
+
+// CONCATENATED MODULE: ./src/main/js/interceptors/nonSensitiveHakemus.js
+
+
+function shouldRerouteRequest(config) {
+  var decodedUrl = decodeURIComponent(window.location.href);
+  var pageReachedBySecureLink = (decodedUrl.includes('hakutoiveidenMuokkaus.html') || decodedUrl.includes('token'));
+  return pageReachedBySecureLink && config.url.includes('/secure/')
+}
+
+function shouldAuthenticate(config) {
+  return config.url.includes('insecure/')
+}
+
+/* harmony default export */ var nonSensitiveHakemus = (['$cookies', function HakemusInterceptor($cookies) {
+  return {
+    request: function(config) {
+      if (shouldRerouteRequest(config)) {
+        config.url = config.url.replace(/\/secure\//, '/insecure/')
+      }
+      if (shouldAuthenticate(config) && getBearerToken()) {
+        config.headers.Authorization = 'Bearer ' + getBearerToken()
+      }
+      config.headers.CSRF = $cookies.get('CSRF');
+      return config
+    },
+
+    response: function(response) {
+      if (shouldAuthenticate(response.config) && response.data && response.data.jsonWebToken) {
+        setBearerToken(response.data.jsonWebToken);
+        response.oiliJwt = response.data.oiliJwt;
+        response.data = response.data.response
+      }
+      return response
+    }
+  };
+}]);
+
+// CONCATENATED MODULE: ./src/main/js/interceptors/restError.js
+
+/* harmony default export */ var restError = (["$injector", "$q", function RestErrorInterceptor($injector, $q) {
+  var errors = 0;
+  var duplicates = 0;
+  var loggedErrors = [];
+
+  return {
+    responseError: function (error) {
+      var $http = $injector.get("$http");
+      var logEndpoint = window.url("omatsivut.errorlogtobackend");
+      if (error === undefined) {
+        return error;
+      }
+      //console.log("Caught REST error. Errors before this one: " + errors + ", duplicates before this one: " + duplicates);
+      try {
+        var failedRequestUrl = (error.config !== undefined && error.config.url !== undefined) ? error.config.url : 'unknown url';
+        var unknownUrl = failedRequestUrl === 'unknown url';
+        if (failedRequestUrl.indexOf(logEndpoint) !== -1 || unknownUrl) {
+          if (unknownUrl) {
+            console.log("Won't log a failed rest request to an unknown url", error);
+          } else {
+            console.log("Error came from logging endpoint, won't try to log it to avoid a loop")
+          }
+        } else {
+          var errorData = error.data !== undefined ? JSON.stringify(error.data) : '';
+          var statusCode = error.status !== undefined ? error.status : '-1';
+          var statusText = error.statusText !== undefined ? error.statusText : '';
+          var config = error.config !== undefined ? error.config : '*** no config available!';
+          var requestMethod = error.config !== undefined ? error.config.method : '*** unknown method';
+          var errorInfo = JSON.stringify({
+            type: 'FrontendFailedRequestError',
+            url: failedRequestUrl,
+            statusCode: statusCode,
+            statusText: statusText,
+            errorData: errorData,
+            requestMethod: requestMethod
+          });
+          var errorId = failedRequestUrl + ' - ' + statusCode + ' - ' + statusText;
+          if (loggedErrors.indexOf(errorId) !== -1) {
+            console.log("Error with id has already been logged! ", errorId);
+            duplicates += 1;
+            errors += 1;
+          } else {
+            errors += 1;
+            loggedErrors.push(errorId)
+          }
+          $http.post(logEndpoint, errorInfo)
+            .then(function (success) {
+                console.log("Failed resource call successfully logged to backend");
+              },
+              function (failure) {
+                console.log("Failed resource call detected, logging to backend failed");
+              }
+            );
+        }
+      } catch (e) {
+        console.log("Something went wrong while trying to log backend rest error: " , e)
+      }
+      return $q.reject(error);
+    }
+  }
+}]);
+
+// CONCATENATED MODULE: ./src/main/js/config/router.js
+
+
+
+/* harmony default export */ var router = (['$httpProvider', '$locationProvider', function($httpProvider, $locationProvider) {
+  $locationProvider.html5Mode(true);
+  $httpProvider.interceptors.push(nonSensitiveHakemus);
+  $httpProvider.interceptors.push(restError);
+}]);
+
+// CONCATENATED MODULE: ./src/main/js/models/hakutoive.js
+
+
+const hakutoive_ = __webpack_require__(18);
+const hakutoiveErrorRegexp = /^(preference\d)$|^(preference\d)-Koulutus$/;
+
+class hakutoive_Hakutoive {
+  constructor(json) {
+    this.importJson(json)
+    this.isModified = false
+    this.isNew = hakutoive_.isEmpty(json)
+    this.addedDuringCurrentSession = hakutoive_.isEmpty(json)
+    this.errors = []
+  }
+
+  toJson() {
+    return this.data
+  }
+
+  importJson(json) {
+    this.data = json.hakemusData || {};
+    this.hakuaikaId = json.hakuaikaId;
+    this.kohdekohtainenHakuaika = json.kohdekohtainenHakuaika;
+    this.koulutuksenAlkaminen = json.koulutuksenAlkaminen;
+  }
+
+  clear() {
+    this.data = {}
+    this.isNew = true
+    this.isModified = false
+  }
+
+  hasData() {
+    return !hakutoive_.isEmpty(this.data)
+  }
+
+  setOpetuspiste(id, name) {
+    this.data["Opetuspiste"] = name
+    this.data["Opetuspiste-id"] = id
+    this.isModified = true
+    this.setErrors([])
+  }
+
+  setKoulutus(koulutus) {
+    this.data["Koulutus"] = toString(koulutus.name)
+    this.data["Koulutus-id"] = toString(koulutus.id)
+    this.data["Koulutus-educationDegree"] = toString(koulutus.educationDegree)
+    this.data["Koulutus-id-lang"] = toString(koulutus.teachingLanguages[0])
+    this.data["Koulutus-id-sora"] = toString(koulutus.sora)
+    this.data["Koulutus-id-aoIdentifier"] = toString(koulutus.aoIdentifier)
+    this.data["Koulutus-id-kaksoistutkinto"] = toString(koulutus.kaksoistutkinto)
+    this.data["Koulutus-id-vocational"] = toString(koulutus.vocational)
+    this.data["Koulutus-id-educationcode"] = toString(koulutus.educationCodeUri)
+    this.data["Koulutus-id-athlete"] = toString(koulutus.athleteEducation)
+    this.data["Koulutus-id-discretionary"] = toString(koulutus.kysytaanHarkinnanvaraiset)
+    this.data["Koulutus-id-attachments"] = toString(koulutus.attachments != null && koulutus.attachments.length > 0)
+    this.data["Koulutus-requiredBaseEducations"] = (koulutus.requiredBaseEducations || []).join(",")
+    this.addGroupInfo(koulutus)
+    this.isModified = true
+    this.setErrors([])
+    function toString(x) {
+      return (x==null) ? "" : x.toString()
+    }
+  }
+
+  addGroupInfo(koulutus) {
+    var attachmentGroups = [];
+    var aoGroups = [];
+    if (koulutus.organizationGroups instanceof Array) {
+      for (var i = 0; i < koulutus.organizationGroups.length; i++) {
+        var group = koulutus.organizationGroups[i];
+        if(group.groupTypes.indexOf("hakukohde") >= 0) {
+          aoGroups.push(group.oid);
+          if(group.usageGroups.indexOf("hakukohde_liiteosoite") >= 0) {
+            attachmentGroups.push(group.oid);
+          }
+        }
+      }
+    }
+    if(aoGroups.length > 0) {
+      this.data["Koulutus-id-ao-groups"] = aoGroups.join(",")
+    }
+    if(attachmentGroups.length > 0) {
+      this.data["Koulutus-id-attachmentgroups"] = attachmentGroups.join(",")
+    }
+  }
+
+  hasOpetuspiste() {
+    return !hakutoive_.isEmpty(this.data["Opetuspiste-id"])
+  }
+
+  removeOpetuspisteData() {
+    var self = this
+    hakutoive_.each(this.data, function(value, key) {
+      if (key.indexOf("$")!==0 && key != "Opetuspiste")
+        delete self.data[key]
+    })
+    delete this.kohdekohtainenHakuaika
+  }
+
+  isValid() {
+    return (hakutoive_.isEmpty(this.data["Opetuspiste"]) || !hakutoive_.isEmpty(this.data["Koulutus-id"]))
+  }
+
+  setErrors(errors) {
+    this.errors = errors || []
+  }
+
+  appendErrors(errors) {
+    this.errors = this.errors.concat(errors)
+  }
+
+  setAsSaved() {
+    this.isNew = false
+    this.isModified = false
+  }
+
+  setAsModified() {
+    this.isModified = true
+  }
+
+  static isHakutoiveError(questionId) {
+    return hakutoiveErrorRegexp.test(questionId)
+  }
+
+  static parseHakutoiveIndex(questionId) {
+    var result = /^preference(\d+)/.exec(questionId)
+    if (result)
+      return Number(result[1])
+    else
+      return null
+  }
+
+  static hasHakutoiveErrors(errorsJson) {
+    var errorMap = mapArray(errorsJson, "key", "message");
+    var self = this
+    return hakutoive_(errorMap).any(function(val, key) {
+      return self.isHakutoiveError(key) && val.length > 0
+    })
+  }
+
+  static hakutoiveMap(hakutoiveet) {
+    return indexBy(hakutoiveet, function(hakutoive, index) { return "preference" + (index+1) })
+  }
+
+  static questionIdToHakutoiveId(questionId) {
+    return hakutoive_.chain(hakutoiveErrorRegexp.exec(questionId)).rest().without(undefined).first().value()
+  }
+
+}
+
+// CONCATENATED MODULE: ./src/main/js/models/hakemus.js
+
+
+
+
+const hakemus_ = __webpack_require__(18);
+
+class hakemus_Hakemus {
+  constructor(json) {
+    this.oid = json.hakemus.oid;
+    this.updated = json.hakemus.updated;
+    this.haku = copy(json.hakemus.haku);
+    this.state = copy(json.hakemus.state);
+    this.hasForm = json.hakemus.hasForm;
+    this.educationBackground = copy(json.hakemus.educationBackground);
+    this.notifications = json.hakemus.notifications;
+    this.ohjeetUudelleOpiskelijalle = json.hakemus.ohjeetUudelleOpiskelijalle;
+    this.hakutoiveet = convertHakutoiveet(json.hakemus.hakutoiveet);
+    this.henkilotiedot = convertHenkilotiedot(json.hakemus.answers.henkilotiedot);
+    this.henkiloNimi = parseName(json.hakemus.answers.henkilotiedot);
+    this.persistedAnswers = json.hakemus.answers;
+    this.additionalQuestions = question_Question.getQuestions(json.questions, this);
+    this.tuloskirje = copy(formatTuloskirje(json.hakemus.tuloskirje));
+    this.tulosOk = json.tulosOk;
+    this.requiredPaymentState = json.hakemus.requiredPaymentState;
+    this.calculatedValues = {
+      postOffice: json.hakemus.postOffice
+    };
+    this.oiliJwt = null;
+    this.hakemusSource = json.hakemusSource;
+    this.previewUrl = json.previewUrl;
+  }
+
+  removePreference(index) {
+    this.hakutoiveet.splice(index, 1)
+    updatePreferenceQuestionIds.call(this, function(arr) {
+      arr.splice(index, 1)
+    })
+  }
+
+  addPreference(hakutoive) {
+    this.hakutoiveet.push(hakutoive)
+  }
+
+  hasPreference(index) {
+    return index >= 0 && index <= this.hakutoiveet.length-1 && this.hakutoiveet[index].hasData()
+  }
+
+  movePreference(from, to) {
+    this.hakutoiveet[from].setAsModified()
+    this.hakutoiveet[to].setAsModified()
+    this.hakutoiveet.splice(to, 0, this.hakutoiveet.splice(from, 1)[0])
+
+    updatePreferenceQuestionIds.call(this,
+      function(arr) {
+        arr.splice(to, 0, arr.splice(from, 1)[0])
+      }
+    )
+  }
+
+  canMovePreference(from, to) {
+    var lastFilledItem = (function getLastFilled(hakutoiveet) {
+      for (var i=hakutoiveet.length-1; i>=0; i--)
+        if (hakutoiveet[i].hasData())
+          return i
+      return -1
+    })(this.hakutoiveet)
+
+    return !this.preferenceLocked(from) && this.hakutoiveet[from].hasData() && from >= 0 && to <= lastFilledItem && to >= 0
+  }
+
+  preferenceLocked(index) {
+    var hakutoive = this.hakutoiveet[index]
+    var hakuaikaId = hakutoive.hakuaikaId
+    var self = this
+
+    function isPeriodActive(applicationPeriodId) {
+      var period = hakemus_(self.haku.applicationPeriods).find(function(period) { return period.id === applicationPeriodId })
+      return period !== undefined ? period.active : self.haku.active
+    }
+
+    if (hakutoive.addedDuringCurrentSession) {
+      return false
+    } else if (!hakemus_.isEmpty(hakutoive.kohdekohtainenHakuaika)) {
+      return !hakutoive.kohdekohtainenHakuaika.active
+    } else if (!hakemus_.isEmpty(hakuaikaId)) {
+      return !isPeriodActive(hakuaikaId)
+    } else {
+      return !this.haku.active
+    }
+  }
+
+  allResultsAvailable() {
+    return !this.hasResultState(["KESKEN", "VARALLA"]) && this.valintatulosHakutoiveet().length > 0
+  }
+
+  resultFetchedSuccessfully() {
+    return this.tulosOk
+  }
+
+  hasSomeResults() {
+    return this.valintatulosHakutoiveet().length > 0
+  }
+
+  hasSomeNonKeskenResults() {
+    return this.hasSomeResults() && hakemus_(this.valintatulosHakutoiveet()).some(function(hakutoive) { return hakutoive.valintatila != "KESKEN" })
+  }
+
+  valintatulosHakutoiveet() {
+    return this.state && this.state.valintatulos ? this.state.valintatulos.hakutoiveet : []
+  }
+
+  applicationPeriodsInactive() {
+    return hakemus_(this.haku.applicationPeriods).every(function(period) { return !period.active })
+  }
+
+  editHakutoiveetEnabled() {
+    return this.state && (this.state.id === 'ACTIVE' || this.state.id === 'INCOMPLETE') && this.hakemusSource !== 'Ataru'
+  }
+
+  editHenkilotiedotEnabled() {
+    return this.editHakutoiveetEnabled() || (this.state && this.state.id === "HAKUKAUSIPAATTYNYT" && this.hakemusSource !== 'Ataru')
+  }
+
+  hasVastaanotettaviaOrIlmoittauduttavia() {
+    return this.ilmoittautumisLinkit().length > 0 || this.vastaanotettavatHakutoiveet().length > 0;
+  }
+
+  vastaanotettavatHakutoiveet() {
+    return hakemus_(this.valintatulosHakutoiveet()).filter(function(hakutoive) {
+      return (hakutoive.vastaanotettavuustila === "VASTAANOTETTAVISSA_SITOVASTI" || hakutoive.vastaanotettavuustila === "VASTAANOTETTAVISSA_EHDOLLISESTI") && hakutoive.vastaanottotila == "KESKEN"
+    })
+  }
+
+  ilmoittautumisLinkit() {
+    return hakemus_(this.valintatulosHakutoiveet()).filter(function(tulos) {
+      return tulos.ilmoittautumistila != null &&
+        (tulos.ilmoittautumistila.ilmoittauduttavissa || ilmoittautunut(tulos.ilmoittautumistila.ilmoittautumistila))
+    });
+
+    function ilmoittautunut(ilmoittautumistila) {
+        return ['LASNA_KOKO_LUKUVUOSI', 'POISSA_KOKO_LUKUVUOSI', 'LASNA_SYKSY', 'POISSA_SYKSY', 'LASNA', 'POISSA'].includes(ilmoittautumistila);
+    }
+  }
+
+  kelaURL() {
+    return hakemus_.chain(this.valintatulosHakutoiveet()).map(function(tulos) {
+      return tulos.kelaURL
+    }).filter(function(k) {return k}).head().value()
+  }
+
+  oiliUrl() {
+    var oiliJwt = this.oiliJwt;
+    return hakemus_.chain(this.valintatulosHakutoiveet()).map(function(tulos) {
+      var baseUrl = tulos.ilmoittautumistila.ilmoittautumistapa.url;
+      return baseUrl.endsWith('/oili/') ? baseUrl : baseUrl + '?token=' + oiliJwt;
+    }).filter(function(k) {return k}).head().value()
+  }
+
+  hasResultState(resultStates) {
+    if (!hakemus_.isArray(resultStates))
+      resultStates = [resultStates]
+
+    return hakemus_(this.valintatulosHakutoiveet()).any(function(hakutoive) {
+      return hakemus_(resultStates).contains(hakutoive.valintatila)}
+    )
+  }
+
+  toJson() {
+    var self = this
+
+    return {
+      oid: self.oid,
+      hakuOid: self.haku.oid,
+      hakutoiveet: hakemus_(this.hakutoiveet).map(function(hakutoive) { return hakutoive.toJson() }),
+      answers: removeFalseBooleans(getAnswers())
+    }
+
+    function getAnswers() {
+      var contactDetails = hakemus_(self.henkilotiedot).reduce(function(answers, question, id) {
+        answers.henkilotiedot[id] = question.answer
+        return answers
+      }, { henkilotiedot: {}})
+
+      var additionalQuestionAnswers = hakemus_(question_Question.questionMap(self.additionalQuestions)).reduce(function(answers, questionNode) {
+        answers[questionNode.id.phaseId] = answers[questionNode.id.phaseId] || {}
+        var answer = questionNode.answer
+        if (hakemus_.isObject(answer)) {
+          hakemus_(answer).each(function(val, key) {
+            answers[questionNode.id.phaseId][key] = val
+          })
+        } else {
+          answers[questionNode.id.phaseId][questionNode.id.questionId] = answer
+        }
+        return answers
+      }, {})
+
+      return hakemus_.extend({}, contactDetails, additionalQuestionAnswers)
+    }
+
+    function removeFalseBooleans(obj) {
+      hakemus_.each(obj, function(val, key) {
+        if (hakemus_.isBoolean(val) && val === false)
+          obj[key] = ""
+        else if (hakemus_.isObject(val))
+          removeFalseBooleans(val)
+      })
+      return obj;
+    }
+  }
+
+  mergeSavedApplication(savedApplication) {
+    this.updated = savedApplication.updated;
+    this.requiredPaymentState = savedApplication.requiredPaymentState;
+    this.notifications = savedApplication.notifications;
+
+    if (!hakemus_.isEqual(withoutAngularFields(this.state), savedApplication.state))
+      this.state = window.$.extend(true, this.state, savedApplication.state);
+
+    for (let i=0; i<this.hakutoiveet.length && i<savedApplication.hakutoiveet.length; i++) {
+      let hakutoive = this.hakutoiveet[i];
+      hakutoive.importJson(savedApplication.hakutoiveet[i]);
+      if (hakutoive.hasData()) {
+        hakutoive.setAsSaved()
+      }
+    }
+  }
+
+  importHakuajat(hakukohteet) {
+    if (hakukohteet != null) {
+      for (var i = 0; i < this.hakutoiveet.length && i < hakukohteet.length; i++) {
+        this.hakutoiveet[i].kohdekohtainenHakuaika = hakukohteet[i].kohdekohtainenHakuaika
+      }
+    }
+  }
+
+  importPaymentInfo(paymentInfo) {
+    var hakemus = this
+    paymentInfo = paymentInfo || {}
+    this.hakutoiveet.forEach(function(hakutoive) {
+      var hakemusPaid = hakemus.requiredPaymentState === 'OK'
+      hakutoive.showPaymentNotification = paymentInfo[hakutoive.data['Koulutus-id']] && !hakemusPaid
+    });
+  }
+
+  validatePreferences() {
+    return (this.hakutoiveet.length > 0 && this.hakutoiveet[0].hasData()) &&
+      hakemus_(this.hakutoiveet).every(function(hakutoive) {
+        return hakutoive.isValid()
+      }) && !hakemus_(this.hakutoiveet.slice(0, this.lastIndexWithData() + 1)).any(function(hakutoive) {
+        return !hakutoive.hasData()
+      })
+  }
+
+  getChangedPreferences() {
+    return hakemus_(this.hakutoiveet).chain()
+      .map(function(hakutoive, index) { return hakutoive.isModified ? index : null })
+      .without(null)
+      .value()
+  }
+
+  isEditable(index) {
+    return !this.applicationPeriodsInactive() &&  index <= this.lastIndexWithData() + 1
+  }
+
+  lastIndexWithData() {
+    for (var i = this.hakutoiveet.length - 1; i >= 0; i--) {
+      if (this.hakutoiveet[i].hasData()) return i
+    }
+    return -1
+  }
+
+  compareQuestionMapsIgnoring(oldQuestions, newQuestions, ignored) {
+    var areEqual = false;
+
+    if (hakemus_.keys(oldQuestions).length === hakemus_.keys(newQuestions).length) {
+      areEqual = hakemus_.every(newQuestions, function (question, id) {
+        if (oldQuestions[id]) {
+          var oldQ = hakemus_.omit(oldQuestions[id], ignored);
+          var Q = hakemus_.omit(question, ignored);
+          return angular.equals(oldQ, Q);
+        } else {
+          return false;
+        }
+      });
+    } else {
+      areEqual = false;
+    }
+
+    return areEqual;
+  }
+
+  importQuestions(questions) {
+    var currentQuestions = question_Question.questionMap(this.additionalQuestions);
+    var newQuestions = question_Question.questionMap(questions);
+    var equalQuestions = this.compareQuestionMapsIgnoring(currentQuestions, newQuestions, ['answer', 'errors']);
+
+    if (equalQuestions) {
+      this.additionalQuestions = (function mergeErrors(old, questions) {
+        var oldQuestions = question_Question.questionMap(old);
+        hakemus_(oldQuestions).each(function(oldQuestion, id) {
+          if (questions[id] != null)
+            oldQuestion.errors = questions[id].errors;
+        });
+        return old;
+      })(this.additionalQuestions, questions);
+      return this.additionalQuestions;
+    } else {
+      this.additionalQuestions = (function mergeOldAnswers(old, questions) {
+        var oldQuestions = question_Question.questionMap(old);
+        hakemus_(question_Question.questionMap(questions)).each(function(newQuestion, id) {
+          if (oldQuestions[id] != null)
+            newQuestion.answer = oldQuestions[id].answer;
+        });
+        return questions;
+      })(this.additionalQuestions, questions);
+
+      return this.additionalQuestions;
+    }
+  }
+
+  updateValidationMessages(errors, skipQuestions) {
+    var errorMap = mapArray(errors, "key", "message")
+    var hakutoiveMap = hakutoive_Hakutoive.hakutoiveMap(this.hakutoiveet)
+    var questionMap = hakemus_.extend({}, question_Question.questionMap(this.additionalQuestions), this.henkilotiedot)
+    var unhandled = []
+
+    clearErrors()
+
+    hakemus_(errorMap).each(function(errorList, key) {
+      if (!updateErrors(key, errorList))
+        unhandled.push({questionId: key, errors: errorList})
+    })
+
+    return unhandled
+
+    function clearErrors() {
+      hakemus_(hakutoiveMap).each(function(item) {
+        item.setErrors()
+      });
+      if (!skipQuestions) {
+        hakemus_(questionMap).each(function(item) {
+          try {
+            item.setErrors()
+          } catch (e) {
+            console.log("For some unfathomable reason item.setErrors() is not defined here although it should be! Should be fixed hakemus.js#updateValidationMessages().");
+          }
+        })
+      }
+    }
+
+    function updateErrors(questionId, errors) {
+      if (questionMap[questionId] != null) {
+        if (!skipQuestions)
+          questionMap[questionId].appendErrors(errors)
+        return true
+      } else if (hakutoive_Hakutoive.isHakutoiveError(questionId)) {
+        hakutoiveMap[hakutoive_Hakutoive.questionIdToHakutoiveId(questionId)].appendErrors(errors)
+        return true
+      } else {
+        return false
+      }
+    }
+  }
+}
+
+function copy(json) { return $.extend(true, {}, json) }
+
+function formatTuloskirje(tuloskirje) {
+  if(tuloskirje) {
+    var date = new Date(tuloskirje.created);
+    var yyyy = date.getFullYear();
+    var mm = date.getMonth() + 1;
+    var dd  = date.getDate();
+    tuloskirje.createdDate = dd + "." + mm + "." + yyyy
+  }
+  return tuloskirje;
+}
+
+function convertHenkilotiedot(json) {
+  if (!hakemus_.isUndefined(json)) {
+    var fields = ["Sähköposti", "matkapuhelinnumero1", "asuinmaa", "lahiosoite", "Postinumero"];
+    return hakemus_(fields).reduce(function (memo, key) {
+      memo[key] = new question_Question({id: key}, json[key]);
+      return memo
+    }, {})
+  }
+}
+
+function parseName(json) {
+  if (!hakemus_.isUndefined(json)) {
+    var etunimi = json["Etunimet"];
+    if (!etunimi) {
+      etunimi = json["Kutsumanimi"];
+    }
+    return etunimi + " " + json["Sukunimi"];
+  }
+}
+
+function convertHakutoiveet(hakutoiveet) {
+  return hakemus_(hakutoiveet).map(function(hakutoive) { return new hakutoive_Hakutoive(hakutoive) })
+}
+
+function updatePreferenceQuestionIds(manipulationF) {
+  var newIndexes = (function getNewIndexes() {
+    var arr = hakemus_.range(1, this.hakutoiveet.length+1)
+    manipulationF(arr)
+    var indexes = hakemus_(arr).map(function(val, index) { return [val, index+1] })
+    return hakemus_.object(indexes)
+  }).call(this)
+
+  hakemus_(question_Question.questionMap(this.additionalQuestions)).each(function(question, id) {
+    var questionIdParts = /^(preference)(\d+)([-_].+)/.exec(id)
+    if (questionIdParts != null) {
+      var newId = questionIdParts[1] + newIndexes[questionIdParts[2]] + questionIdParts[3]
+      question.id.questionId = newId
+    }
+  })
+}
+
+// CONCATENATED MODULE: ./src/main/js/directives/applicationList.js
+
+const applicationList_ = __webpack_require__(18);
+
+/* harmony default export */ var applicationList = (["restResources", function (restResources) {
+  return {
+    restrict: 'E',
+    scope: true,
+    template: __webpack_require__(158),
+
+    link: function ($scope, element, attrs) {
+      $scope.$on("hakutoive-vastaanotettu", function() {
+        loadApplications()
+      });
+      $scope.loadApplications = loadApplications
+      loadApplications();
+
+      function loadApplications() {
+        $scope.applicationStatusMessage = "message.loadingApplications";
+        $scope.applicationStatusMessageType = "ajax-spinner";
+        restResources.applications.get(success, error)
+      }
+
+      function success(data) {
+        $scope.allApplicationsFetched = data.allApplicationsFetched;
+        $scope.applications = applicationList_.map(data.applications, function(json) {
+          var application = new hakemus_Hakemus(json);
+          application.isHakutoiveidenMuokkaus = false;
+          return application;
+        });
+        if($scope.applications.length > 0) {
+          $scope.applicationStatusMessage = "";
+          $scope.applicationStatusMessageType = ""
+        } else if (!$scope.allApplicationsFetched) {
+          $scope.applicationStatusMessage = "error.loadingFailed";
+          $scope.applicationStatusMessageType = "error"
+        } else {
+          $scope.applicationStatusMessage = "message.noApplications";
+          $scope.applicationStatusMessageType = "info"
+        }
+      }
+
+      function error(err) {
+        switch (err.status) {
+          case 401:
+            document.location.replace(window.url("omatsivut.login"));
+            break;
+          case 404:
+            $scope.applicationStatusMessage = "errorPage.noApplicationsFound.text";
+            $scope.applicationStatusMessageType = "info";
+            break;
+          default:
+            $scope.applicationStatusMessage = "error.loadingFailed";
+            $scope.applicationStatusMessageType = "error"
+        }
+        $scope.applications = [];
+      }
+    }
+  }
+}]);
+
+// CONCATENATED MODULE: ./src/main/js/directives/notification.js
+class Notification {
+  constructor() {
+    this.restrict = 'E';
+    this.scope = {
+      message: '@'
+    };
+    this.template = __webpack_require__(157);
+  }
+
+  link(scope) {
+    scope.visible = true;
+    scope.close = () => scope.visible = false;
+  }
+}
+
+// CONCATENATED MODULE: ./src/main/js/directives/confirm.js
+/* harmony default export */ var directives_confirm = (function () {
+  return {
+    scope: {
+      callback: '&confirmAction'
+    },
+    link: function (scope, element, attrs) {
+      var originalText = ""
+
+      function cancel() {
+        element.removeClass("confirm")
+        element.text(originalText)
+        element.off(".cancelConfirm")
+        $("body").off(".cancelConfirm")
+      }
+
+      element.on("click", function () {
+        if (element.hasClass("confirm")) {
+          scope.$apply(scope.callback)
+          cancel()
+        } else {
+          element.hide()
+          element.addClass("confirm")
+          originalText = element.text()
+          element.text(attrs.confirmText)
+          $("body").one("click.cancelConfirm", cancel)
+          element.fadeIn(100)
+        }
+        return false
+      })
+    }
+  }
+});
+
+// CONCATENATED MODULE: ./src/main/js/directives/question.js
+const directives_question_ = __webpack_require__(18);
+
+/* harmony default export */ var question = (['RecursionHelper', function(RecursionHelper) {
+  return {
+    restrict: 'E',
+    scope: {
+      questionNode: '=',
+      application: '=',
+      level: '='
+    },
+    template: __webpack_require__(156),
+    compile: function (element) {
+      return RecursionHelper.compile(element, function ($scope, iElement, iAttrs, controller, transcludeFn) {
+        $scope.isGroup = function () {
+          return $scope.questionNode && !directives_question_.isEmpty($scope.questionNode.questionNodes)
+        }
+      })
+    }
+  }
+}]);
+
+// CONCATENATED MODULE: ./src/main/js/directives/localizedLink.js
+
+
+/* harmony default export */ var localizedLink = (function() {
+  return {
+    restrict: "E",
+    template: "",
+    link: function (scope, element, attrs) {
+      var linkString = localize(attrs["key"])
+      var link = $("<span>" + linkString + "</span>")
+        .find("a")
+        .attr("href", attrs["href"])
+        .attr("target", attrs["target"])
+        .end()
+      // angular re-evaluates the original href expression and attrs.href needs to be watched
+      // <localized-link key="message.rememberSendAttachments"
+      //     href="{{url('omatsivut.applications.preview', application.oid) + '#liitteet'}}" target="_blank">
+      // link function is called with: attrs.href == "#liitteet"
+      // watched value for attrs.href becomes: "/omatsivut/secure/applications/preview/1.2.246.562.11.00000877699#liitteet"
+      // angular, WTF?
+      scope.$watch("attrs.href", function(value) {
+        link.find("a").attr("href", attrs.href)
+      });
+      element.append(link)
+    }
+  }
+});
+
+// CONCATENATED MODULE: ./src/main/js/directives/formattedTime.js
+/* harmony default export */ var formattedTime = (function () {
+  return {
+    restrict: "A",
+    template: "",
+    scope: {
+      formattedTime: "=formattedTime"
+    },
+    link: function (scope, element, attrs) {
+      scope.$watch("formattedTime", function(dt) {
+        if (dt == null) {
+          return ""
+        } else {
+          var m = window.moment(dt).tz('Europe/Helsinki');
+          var format = m.format();
+          element.attr("datetime", format);
+
+          var text = m.format(attrs.format || 'LLLL Z');
+          text = text.replace(/,/g, "").replace(/\+02:00/, "(EET)").replace(/\+03:00/, "(EEST)");
+          element.text(text);
+        }
+      })
+    }
+  }
+});
+
+// CONCATENATED MODULE: ./src/main/js/directives/sortable.js
+/* harmony default export */ var sortable = (["settings", function(settings) {
+  return function($scope, $element, attrs) {
+    var slide = function(el, offset) {
+      el.css("transition", "all 0.5s")
+      el.css("transform", "translate3d(0px, " + offset + "px, 0px)")
+    }
+
+    var resetSlide = function(el) {
+      el.css({
+        "transition": "",
+        "transform": ""
+      })
+    }
+
+    var switchPlaces = function(element1, element2) {
+      var diffY = Math.abs(element1.offset().top - element2.offset().top)
+
+      if (element1.index() < element2.index()) {
+        slide(element1, element2.outerHeight() + diffY-element1.outerHeight())
+        slide(element2, -diffY)
+      } else {
+        slide(element2, element1.outerHeight() + diffY-element2.outerHeight())
+        slide(element1, -diffY)
+      }
+
+      setTimeout(function() {
+        $scope.$apply(function(self) {
+          var items = $element.find(attrs.sortableItem)
+          self[attrs.sortableMoved](items.index(element1), items.index(element2))
+          resetSlide(element1)
+          resetSlide(element2)
+        })
+      }, settings.uiTransitionTime)
+    }
+
+    var arrowClicked = function(elementF) {
+      return function(evt) {
+        var btn = $(evt.target)
+        if (!btn.hasClass("disabled")) {
+          var element1 = btn.closest(attrs.sortableItem)
+          var element2 = element1[elementF]()
+          switchPlaces(element1, element2)
+        }
+      }
+    }
+
+    $element.on("click", ".sort-arrow-down", arrowClicked("next"))
+    $element.on("click", ".sort-arrow-up", arrowClicked("prev"))
+  }
+}]);
+
+// CONCATENATED MODULE: ./src/main/js/directives/disableClickFocus.js
+/* harmony default export */ var disableClickFocus = (function() {
+  return {
+    link: function (scope, element) {
+      element.on("mousedown", function(event) {
+        event.preventDefault()
+      })
+    }
+  }
+});
+
+// CONCATENATED MODULE: ./src/main/js/directives/ignoreDirty.js
+/* harmony default export */ var ignoreDirty = (function() {
+  return {
+    restrict: 'A',
+    require: 'ngModel',
+    link: function(scope, elm, attrs, ctrl) {
+      ctrl.$pristine = false;
+    }
+  }
+});
+
+// CONCATENATED MODULE: ./src/main/js/directives/application.js
+
+
+
+const application_ = __webpack_require__(18);
+
+/* harmony default export */ var directives_application = (["restResources", "applicationValidator", "settings", "debounce", "$timeout",
+    function (restResources, applicationValidator, settings, debounce, $timeout) {
+  return {
+    restrict: 'E',
+    scope: {
+      application: "="
+    },
+    template: __webpack_require__(155),
+
+    link: function ($scope, $element, attrs) {
+      $scope.localization = localize;
+      var applicationValidatorBounced = debounce(applicationValidator(), settings.modelDebounce)
+      $scope.isSaveable = true
+      $scope.isValidating = false
+
+      $scope.timestampLabel = function() {
+        if ($scope.application.received === $scope.application.updated)
+          return localization("label.applicationReceived")
+        else
+          return localization("label.applicationUpdated")
+      }
+      $scope.shouldSaveButtonBeDisabled = function() {
+        return $scope.applicationForm.$pristine || $scope.statusMessageType === 'pending' || !$scope.isSaveable || $scope.isValidating
+      }
+
+      $scope.statusMessageStyleModifier = function() {
+        return {
+          'ajax-spinner': $scope.statusMessageType === 'pending',
+          error: $scope.statusMessageType === 'error',
+          success: $scope.statusMessageType === 'success'
+        }
+      }
+
+      function getHakutoiveet() {
+        return application_($scope.application.hakutoiveet).map(function(hakutoive) {
+          return {
+            "Koulutus": hakutoive.data["Koulutus"],
+            "Koulutus-id": hakutoive.data["Koulutus-id"],
+            "Opetuspiste": hakutoive.data["Opetuspiste"],
+            "Opetuspiste-id": hakutoive.data["Opetuspiste-id"]
+          }
+        })
+      }
+
+      function getAnswers() {
+        var answersToAdditionalQuestions = application_(question_Question.questionMap($scope.application.additionalQuestions)).map(function(item, key) { return item.answer })
+        var otherAnswers = application_($scope.application.henkilotiedot).map(function(item) { return item.answer })
+        return answersToAdditionalQuestions.concat(otherAnswers)
+      }
+
+      $scope.$watch(getHakutoiveet, function(hakutoiveet, oldHakutoiveet) {
+        // Skip initial values angular style
+        if (!application_.isEqual(hakutoiveet, oldHakutoiveet)) {
+          applicationChanged()
+          validateHakutoiveet(true)
+        }
+      }, true)
+
+      $scope.$watch(getAnswers, function(answers, oldAnswers) {
+        if (!application_.isEqual(oldAnswers, answers)) {
+          applicationChanged()
+        }
+      }, true)
+
+      $scope.$on("questionAnswered", function() {
+        validateHakutoiveet(false)
+      })
+
+      $scope.hakutoiveVastaanotettu = function(hakutoive, updated) {
+        $scope.application.mergeSavedApplication(updated.hakemus)
+        $timeout(function() {
+          $scope.$emit("hakutoive-vastaanotettu", hakutoive)
+        }, 0)
+      }
+
+      $scope.url = window.url;
+
+      function applicationChanged() {
+        $scope.applicationForm.$setDirty()
+        if ($scope.statusMessageType === "success")
+          setStatusMessage("")
+      }
+
+      function validateHakutoiveet(skipQuestions) {
+        applicationValidatorBounced($scope.application, beforeBackendValidation, success, error)
+
+        function beforeBackendValidation() {
+          setValidatingIndicator(true)
+        }
+
+        function success(data) {
+          setStatusMessage(localize("message.validationOk"), "info")
+          $scope.isSaveable = true
+          setValidatingIndicator(false)
+          $scope.application.importQuestions(data.questions)
+          $scope.application.importHakuajat(data.response.hakemus.hakutoiveet)
+          $scope.application.importPaymentInfo(data.response.paymentInfo)
+          $scope.application.notifications = data.response.hakemus.notifications
+          $scope.application.tuloskirjeet = data.response.hakemus.tuloskirjeet
+          updateValidationMessages([], skipQuestions)
+        }
+
+        function error(data) {
+          setValidatingIndicator(false)
+          if (!data.statusCode) { // validointi epäonnistui frontendissä
+            $scope.isSaveable = false
+            setStatusMessage(localize("error.validationFailed"), "error")
+          } else if (data.statusCode === 200) {
+            $scope.isSaveable = application_.isEmpty(data.errors)
+            setStatusMessage(localize("error.validationFailed"), "error")
+          } else if (data.statusCode == 401) {
+            $scope.isSaveable = true
+            setStatusMessage(localize("error.sessionExpired"), "error")
+          } else if (data.statusCode == 500) {
+            $scope.isSaveable = true
+            setStatusMessage(localize("error.serverError"), "error")
+          } else {
+            $scope.isSaveable = false
+            setStatusMessage(localize("error.validationFailed_httpError"), "error")
+          }
+
+          var updateQuestions = data.questions != null && !hakutoive_Hakutoive.hasHakutoiveErrors(data.errors)
+          var errors = data.errors
+
+          if (updateQuestions) {// frontside validation does not include questions -> don't update
+            $scope.application.importQuestions(data.questions)
+          } else {
+            errors = application_(data.errors).filter(function (error) { return hakutoive_Hakutoive.isHakutoiveError(error.key) })
+          }
+          if (data.response != null && data.response.hakemus != null) {
+            $scope.application.importHakuajat(data.response.hakemus.hakutoiveet)
+            $scope.application.notifications = data.response.hakemus.notifications
+            $scope.application.tuloskirjeet = data.response.hakemus.tuloskirjeet
+          }
+
+          updateValidationMessages(errors, skipQuestions)
+        }
+      }
+
+      $scope.preferenceMoved = function() {
+        setStatusMessage("")
+      }
+
+      function setStatusMessage(msg, type) {
+        $scope.statusMessage = msg
+        $scope.statusMessageType = type || ""
+      }
+
+      var setValidatingIndicator = debounce(function(isVisible) {
+        $scope.isValidating = isVisible
+      }, settings.uiIndicatorDebounce)
+
+      $scope.saveApplication = function() {
+        restResources.applications.update({id: $scope.application.oid }, $scope.application.toJson(), onSuccess, onError)
+        setStatusMessage("", "pending")
+
+        function onSuccess(savedApplication) {
+          highlightSavedItems($scope.application.getChangedPreferences())
+          $scope.$broadcast("show-callout", "attachments", savedApplication.requiresAdditionalInfo === true && $scope.application.getChangedPreferences().length > 0)
+          $scope.application.mergeSavedApplication(savedApplication)
+          $scope.applicationForm.$setPristine()
+          setStatusMessage(localize("message.changesSaved"), "success")
+          updateValidationMessages([])
+          if($scope.application.editHakutoiveetEnabled()) scrollToTop()
+        }
+
+        function onError(err) {
+          var saveError = (function() {
+            if (err.status == 400 && (application_.isArray(err.data) && err.data.length > 0))
+              return "error.saveFailed_validationError"
+            else if (err.status == 400 && !(application_.isArray(err.data) && err.data.length > 0))
+              return "error.serverError"
+            else if (err.status == 401)
+              return "error.saveFailed_sessionExpired"
+            else if (err.status == 500)
+              return "error.serverError"
+            else
+              return "error.saveFailed"
+          })()
+
+          setStatusMessage(localize(saveError), "error")
+          if (err.status == 400) // Validointivirhe
+            updateValidationMessages(err.data)
+        }
+      }
+
+      function highlightSavedItems(indexes) {
+        var items = $element.find(".preference-list-item")
+
+        application_.each(indexes, function(index) {
+          items.eq(index).addClass("saved")
+        })
+
+        $element.find(".timestamp-row").addClass("saved")
+        $element.find(".yhteystiedot .ng-dirty").addClass("saved") // edited contact details
+
+        window.setTimeout(function() {
+          $element.find(".saved").removeClass("saved")
+          $(".timestamp-row").removeClass("saved")
+        }, 3000)
+      }
+
+      function scrollToTop() {
+        var $applicationHeader = $($element[0]).find(".application-header")
+        if ($applicationHeader.get(0) != null && $(window).scrollTop() > $applicationHeader.get(0).offsetTop) $applicationHeader.get(0).scrollIntoView()
+      }
+
+      function updateValidationMessages(errors, skipQuestions) {
+        var unhandledMessages = $scope.application.updateValidationMessages(errors, skipQuestions)
+        unhandledMessages = hideErrorIfAlreadyShowsKoulutusError(unhandledMessages)
+
+        if (unhandledMessages.length > 0) {
+          application_(unhandledMessages).each(function(item) {
+            console.log("Validaatiovirhettä ei käsitelty:", item.questionId, item.errors)
+          })
+
+          setStatusMessage(localize("error.serverError"), "error")
+        }
+
+        function hideErrorIfAlreadyShowsKoulutusError(messages) {
+          return application_(messages).filter(function(message) {
+            var index = hakutoive_Hakutoive.parseHakutoiveIndex(message.questionId)
+            var relatedErrorShown = application_(errors).any(function(error) {
+              return hakutoive_Hakutoive.isHakutoiveError(error.key) && hakutoive_Hakutoive.parseHakutoiveIndex(error.key) == index
+            })
+            return !relatedErrorShown
+          })
+        }
+      }
+    }
+  }
+}]);
+
+// EXTERNAL MODULE: ./node_modules/moment-timezone/index.js
+var moment_timezone = __webpack_require__(68);
+var moment_timezone_default = /*#__PURE__*/__webpack_require__.n(moment_timezone);
+
+// EXTERNAL MODULE: ./node_modules/moment/locale/fi.js
+var fi = __webpack_require__(70);
+
+// EXTERNAL MODULE: ./node_modules/moment/locale/sv.js
+var sv = __webpack_require__(69);
+
+// EXTERNAL MODULE: ./node_modules/moment/locale/en-gb.js
+var en_gb = __webpack_require__(71);
+
+// CONCATENATED MODULE: ./src/main/js/moment.js
+
+
+
+
+
+
+const moment_language = getLanguage();
+if (moment_language === "en")
+  moment_timezone_default.a.locale("en-gb");
+else
+  moment_timezone_default.a.locale(moment_language);
+
+/* harmony default export */ var js_moment = (moment_timezone_default.a);
+
+// CONCATENATED MODULE: ./src/main/js/directives/hakutoiveenVastaanotto.js
+
+
+
+class hakutoiveenVastaanotto_HakutoiveenVastaanotto {
+  constructor() {
+    this.restrict = 'E';
+    this.bindToController = {
+      applicationOid: '&',
+      haku: '&',
+      hakutoiveet: '&',
+      callback: '='
+    };
+    this.template = __webpack_require__(151);
+    this.controller = hakutoiveenVastaanotto_HakutoiveenVastaanottoController;
+    this.controllerAs = 'ctrl';
+  }
+
+  link(scope, element, attrs) {
+    scope.localization = localize;
+  }
+}
+
+class hakutoiveenVastaanotto_HakutoiveenVastaanottoController {
+  constructor($timeout, restResources, $scope) {
+    this.$timeout = $timeout;
+    this.restResources = restResources;
+    this.selectedHakukohde = null;
+
+    try {
+      this.email = $scope.$parent.$parent.application.henkilotiedot['Sähköposti'].answer
+    } catch (e) {
+      this.email = '';
+    }
+  }
+
+  formatTimestamp(dt) {
+    return js_moment(dt).tz('Europe/Helsinki')
+      .format('LLL Z')
+      .replace(/,/g, "")
+      .replace(/\+02:00/, "(EET)")
+      .replace(/\+03:00/, "(EEST)");
+  };
+
+  isVastaanottoKesken() {
+    return this.ajaxPending || this.vastaanottoSentSuccessfully;
+  };
+
+  isNotVastaanotettavissa(hakukohdeOid) {
+    return !(this.vastaanottoAction && this.vastaanottoAction[hakukohdeOid] && this.vastaanottoAction[hakukohdeOid].length !== 0)
+      || (this.selectedHakukohde != hakukohdeOid)
+      || this.isVastaanottoKesken()
+      || (this.isRejectSelected(hakukohdeOid) && !this.confirmCancelAction && this.isKkHaku());
+  }
+
+  isRejectSelected(hakukohdeOid) {
+    return this.vastaanottoAction && this.vastaanottoAction[hakukohdeOid] === 'Peru';
+  }
+
+  isKkHaku() {
+    return !this.haku().toisenasteenhaku;
+  }
+
+  flashSiirtohakuNotification() {
+    this.siirtohakuClass = 'siirtohaku-fade-out';
+    this.$timeout(() => this.siirtohakuClass = 'siirtohaku-fade-in', 50)
+  };
+
+  selectHakukohde(hakukohdeOid) {
+    this.selectedHakukohde = hakukohdeOid;
+  }
+
+  vastaanotaHakutoive(hakutoive) {
+    this.ajaxPending = true;
+
+    const pathParams = {
+      hakemusOid: this.applicationOid(),
+      hakukohdeOid: hakutoive.hakukohdeOid
+    };
+
+    const data = {
+      vastaanottoAction: {action: this.vastaanottoAction[hakutoive.hakukohdeOid]},
+      email: this.email,
+      hakukohdeNimi: hakutoive.hakukohdeNimi,
+      tarjoajaNimi: hakutoive.tarjoajaNimi
+    };
+
+    var promise = this.restResources.vastaanota.post(pathParams, data).$promise;
+    promise.then(this.onSuccess(hakutoive), this.onError());
+  }
+
+  onSuccess(hakutoive) {
+    var self = this;
+    return function(updatedApplication) {
+      self.ajaxPending = false;
+      self.error = "";
+      self.vastaanottoSentSuccessfully = true;
+      self.$timeout(() => self.callback(hakutoive, updatedApplication), 3500);
+    }
+  }
+
+  onError() {
+    var self = this;
+    return function(err) {
+      var errorKey = (function () {
+        if (err.status == 401)
+          return "error.saveFailed_sessionExpired";
+        else if (err.status == 500)
+          return "error.serverError";
+        else if (err.status == 403)
+          return "error.priorAcceptance";
+        else
+          return "error.saveFailed";
+      })();
+      self.error = localize(errorKey);
+      self.ajaxPending = false;
+    }
+  }
+}
+
+hakutoiveenVastaanotto_HakutoiveenVastaanottoController.$inject = ['$timeout', 'restResources', '$scope'];
+
+// CONCATENATED MODULE: ./src/main/js/directives/ilmoittautuminen.js
+
+
+/* harmony default export */ var ilmoittautuminen = (function () {
+  return {
+      restrict: 'E',
+      scope: {
+        hakukohteet: '&',
+        oili: '&',
+        application: '='
+      },
+      template: __webpack_require__(150),
+      link: function ($scope, element, attrs) {
+        $scope.localization = localize;
+
+        $scope.statesToReport = {
+          LASNA_KOKO_LUKUVUOSI: 'semester',
+          POISSA_KOKO_LUKUVUOSI: 'away',
+          LASNA_SYKSY: 'autumn',
+          POISSA_SYKSY: 'spring',
+          LASNA: 'spring',
+          POISSA: 'away_spring'
+        };
+
+        $scope.linkkiOK = function(tulos) {
+          return tulos.ilmoittautumistila.ilmoittautumistapa != null &&
+            tulos.ilmoittautumistila.ilmoittautumistapa.url
+        };
+
+        $scope.ilmoittautumistietoNaytetaan = function(tulos) {
+          if (tulos && tulos.ilmoittautumistila && tulos.ilmoittautumistila.ilmoittautumistila) {
+            return $scope.statesToReport[tulos.ilmoittautumistila.ilmoittautumistila];
+          } else return false;
+        };
+
+        $scope.getEnrolmentMessageKeys = function(tulos) {
+          var date = tulos.ilmoittautumisenAikaleima ? new Date(tulos.ilmoittautumisenAikaleima) : new Date();
+          return {date: date.toLocaleDateString('fi-FI'), time: date.toLocaleTimeString('fi-FI')}
+        };
+
+        $scope.getStateTranslation = function(tulos) {
+          return localize('lasnaoloilmoittautuminen.' + $scope.statesToReport[tulos.ilmoittautumistila.ilmoittautumistila] );
+        };
+
+        $scope.ohjeetUudelleOpiskelijalle = function(hakukohdeOid) {
+          return $scope.application.ohjeetUudelleOpiskelijalle[hakukohdeOid];
+        }
+      }
+  }
+});
+
+
+
+// CONCATENATED MODULE: ./src/main/js/directives/kela.js
+
+
+/* harmony default export */ var kela = (function () {
+  return {
+    restrict: 'E',
+    scope: {
+      kela: '&'
+    },
+    template: __webpack_require__(149),
+    link: function (scope, element, attrs) {
+      scope.localization = localize;
+    }
+  }
+});
+
+// CONCATENATED MODULE: ./src/main/js/directives/hakutoiveet.js
+
+const hakutoiveet_ = __webpack_require__(18);
+
+/* harmony default export */ var directives_hakutoiveet = (function () {
+  return {
+    restrict: 'E',
+    scope: {
+      application: "=",
+      preferenceMoved: "=",
+      validating: "="
+    },
+    template: __webpack_require__(148),
+
+    link: function ($scope, element, attrs) {
+      $scope.localization = localize;
+
+      $scope.movePreference = function(from, to) {
+        if (to >= 0 && to < this.application.hakutoiveet.length) {
+          this.application.movePreference(from, to)
+          this.preferenceMoved()
+        }
+      }
+    }
+  }
+});
+
+// CONCATENATED MODULE: ./src/main/js/directives/valintatulos.js
+
+
+
+
+
+const valintatulos_ = __webpack_require__(18);
+
+/* harmony default export */ var directives_valintatulos = (["restResources", function(restResources) {
+  return {
+    restrict: 'E',
+    scope: {
+      valintatulos: '&data',
+      application: '=application',
+      isFinal: '&final',
+      callback: '=callback'
+    },
+    template: __webpack_require__(147),
+    link: function ($scope, element, attrs) {
+      $scope.localization = localize;
+      $scope.VASTAANOTTOTILA = VASTAANOTTOTILA;
+      $scope.error = false
+      $scope.language = getLanguage();
+
+      $scope.formatDate = function(dt) {
+        if (dt == null)
+          return ""
+        else
+          return moment(dt).format('LL').replace(/,/g, "")
+      }
+
+      $scope.$watch("isFinal()", function(value) {
+        $scope.status = value ? localize("label.resultsFinal") : localize("label.resultsPending")
+      })
+
+      $scope.getError = function() {
+        if ($scope.error) {
+          return localize($scope.error)
+        }
+      }
+      $scope.isHyvaksyttyKesken = function(valintatulos, valintatulokset) {
+        if(valintatulos && valintatulos.valintatila === "HYVAKSYTTY") {
+          var firstKeskenIndex = valintatulos_.findIndex(valintatulokset, function(v) { return v.valintatila === "KESKEN" || v.valintatila === "VARALLA"})
+          if(firstKeskenIndex != -1) {
+            var valintatulosIndex = valintatulos_.findIndex(valintatulokset, function(v) { return v.hakukohdeOid === valintatulos.hakukohdeOid})
+            // If hyvaksytty hakemus is not vastaanotettavissa it belongs to kk haku with sijoittelu
+            return firstKeskenIndex < valintatulosIndex && valintatulos.vastaanotettavuustila === "EI_VASTAANOTETTAVISSA";
+          }
+        }
+        return false;
+      }
+
+      $scope.hakutoiveenValintatulosText = function(valintatulos, valintatulokset) {
+        var isHyvaksyttyKesken = $scope.isHyvaksyttyKesken(valintatulos, valintatulokset);
+        var key = isHyvaksyttyKesken ? "HyvaksyttyKesken" : underscoreToCamelCase(valintatulos.valintatila);
+
+        if ([VASTAANOTTOTILA.VASTAANOTTANUT_SITOVASTI, VASTAANOTTOTILA.EI_VASTAANOTETTU_MAARA_AIKANA, VASTAANOTTOTILA.EHDOLLISESTI_VASTAANOTTANUT].indexOf(valintatulos.vastaanottotila) >= 0) {
+          key = underscoreToCamelCase(valintatulos.vastaanottotila);
+          return localize("label.resultState." + key)
+        } else if (!valintatulos_.isEmpty(tilanKuvaus(valintatulos))) {
+          if(valintatulos.valintatila === "PERUNUT"){
+            return localize("label.resultState." + key)
+          } else if(valintatulos.valintatila === "HYLATTY"){
+            return localize("label.resultState." + key)
+          } else if(hyvaksytty(valintatulos) && valintatulos.ehdollisestiHyvaksyttavissa) {
+            return localize("label.resultState." + key) + localize("label.resultState.EhdollinenPostfix")
+          }
+        } else if (valintatulos.valintatila === "VARALLA" && valintatulos.varasijojaTaytetaanAsti != null) {
+          return localize("label.resultState.VarallaPvm", {
+            varasija: valintatulos.varasijanumero ? valintatulos.varasijanumero + "." : "",
+            varasijaPvm: $scope.formatDate(valintatulos.varasijojaTaytetaanAsti)
+          })
+        } else if(hyvaksytty(valintatulos) && valintatulos.ehdollisestiHyvaksyttavissa) {
+          return localize("label.resultState." + key) + localize("label.resultState.EhdollinenPostfix")
+        }
+        return localize("label.resultState." + key, {
+          varasija: valintatulos.varasijanumero ? valintatulos.varasijanumero + "." : ""
+        })
+      };
+
+      $scope.hakutoiveenValintatilanKuvaus = function(valintatulos) {
+        if (
+          [
+            VASTAANOTTOTILA.VASTAANOTTANUT_SITOVASTI,
+            VASTAANOTTOTILA.EI_VASTAANOTETTU_MAARA_AIKANA,
+            VASTAANOTTOTILA.EHDOLLISESTI_VASTAANOTTANUT,
+          ].indexOf(valintatulos.vastaanottotila) === -1
+        ) {
+          if (
+            hyvaksytty(valintatulos) &&
+            valintatulos.ehdollisestiHyvaksyttavissa
+          ) {
+            return valintatulos[
+              localize(
+                'label.resultState.EhdollisenHyvaksymisenEhdonKentanNimi'
+              )
+            ]
+          }
+          return tilanKuvaus(valintatulos)
+        }
+      }
+
+      $scope.capitalize = function(str) {
+        return str ? `${str.charAt(0).toUpperCase()}${str.slice(1).toLowerCase()}` : ''
+      }
+
+      $scope.vastaanotaSitovasti = function(application, hakukohde) {
+        var email = ''
+        try {
+          email = application.henkilotiedot['Sähköposti'].answer
+        }
+        catch (e) {
+          email = ''
+        }
+        $scope.ajaxPending = true
+
+        restResources.vastaanota.post({hakemusOid: application.oid, hakukohdeOid: hakukohde.hakukohdeOid}, {
+          vastaanottoAction: { action: VASTAANOTTO_ACTION.VASTAANOTA_SITOVASTI },
+          email: email,
+          hakukohdeNimi: hakukohde.hakukohdeNimi,
+          tarjoajaNimi: hakukohde.tarjoajaNimi
+        }, onSuccess, onError)
+
+        function onSuccess(updatedApplication) {
+          $scope.ajaxPending = false
+          $scope.error = ""
+          $scope.vastaanottoSentSuccessfully = true
+          $scope.callback(hakukohde, updatedApplication)
+        }
+
+        function onError(err) {
+          $scope.ajaxPending = false
+          $scope.error = (function () {
+            if (err.status == 401)
+              return "error.saveFailed_sessionExpired"
+            else if (err.status == 500)
+              return "error.serverError"
+            else if (err.status == 403)
+              return "error.priorAcceptance"
+            else
+              return "error.saveFailed"
+          })()
+        }
+      }
+
+      $scope.toggleJonokohtaisetTulostiedotVisibility = function(hakutoive) {
+        if (!$scope.jonokohtaisetTulostiedotVisibility) {
+          $scope.jonokohtaisetTulostiedotVisibility = {
+            [hakutoive.hakukohdeOid]: true
+          }
+          return
+        }
+        $scope.jonokohtaisetTulostiedotVisibility[hakutoive.hakukohdeOid] = !$scope.jonokohtaisetTulostiedotVisibility[hakutoive.hakukohdeOid]
+      }
+
+      $scope.isJonokohtaisetTulostiedotVisible = function(hakutoive) {
+        return $scope.jonokohtaisetTulostiedotVisibility
+          && $scope.jonokohtaisetTulostiedotVisibility[hakutoive.hakukohdeOid]
+          && $scope.hasJonokohtaisetTulostiedot(hakutoive)
+      }
+
+      $scope.hasJonokohtaisetTulostiedot = function(hakutoive) {
+        return hakutoive.jonokohtaisetTulostiedot && hakutoive.jonokohtaisetTulostiedot.length !== 0
+      }
+
+      $scope.sortJonokohtaisetTulostiedot = function(jonokohtaisetTulostiedot) {
+        return jonokohtaisetTulostiedot
+          .map(x => x)
+          .sort((a, b) => {
+            if (!a.hasOwnProperty('valintatapajonoPrioriteetti') || !b.hasOwnProperty('valintatapajonoPrioriteetti')) {
+              return 0
+            }
+            return a.valintatapajonoPrioriteetti - b.valintatapajonoPrioriteetti
+          })
+      }
+
+      $scope.getValintatilanKuvaus = function(jonokohtainenTulostieto) {
+        const { tilanKuvaukset, valintatila } = jonokohtainenTulostieto
+        return getLocalizedDisclaimer(tilanKuvaukset, valintatila)
+      }
+
+      $scope.getEhdollisenHyvaksymisenEhto = function(jonokohtainenTulostieto) {
+        const {
+          ehdollisenHyvaksymisenEhto,
+          valintatila,
+        } = jonokohtainenTulostieto
+        return getLocalizedDisclaimer(ehdollisenHyvaksymisenEhto, valintatila)
+      }
+
+      $scope.hakutoiveValintatilaStateClass = function(hakutoive) {
+        return hakutoive.valintatila === 'HYVAKSYTTY' || hakutoive.valintatila === 'VARASIJALTA_HYVAKSYTTY'
+          ? 'hakutoive--hyvaksytty'
+          : 'hakutoive--ei-hyvaksytty'
+      }
+
+      function getLocalizedDisclaimer(disclaimer, valintatila) {
+        const language = getLanguage().toUpperCase()
+        const localizedDisclaimer = disclaimer
+          ? disclaimer[language] ||
+            disclaimer['FI'] ||
+            disclaimer['EN'] ||
+            disclaimer['SV']
+          : undefined
+        const localizedValintatila = valintatila
+          ? localize(
+              'label.jonokohtaisetTulostiedot.valintatilat.' + valintatila
+            )
+          : undefined
+        return localizedDisclaimer &&
+          (!localizedValintatila ||
+            localizedDisclaimer !== localizedValintatila)
+          ? localizedDisclaimer
+          : undefined
+      }
+
+      $scope.getVarasijaDisclaimer = function(jonokohtainenTulostieto) {
+        let disclaimer
+        if (
+          jonokohtainenTulostieto.valintatila === 'VARALLA' &&
+          !jonokohtainenTulostieto.varasijasaannotKaytossa
+        ) {
+          if (
+            jonokohtainenTulostieto.varasijat &&
+            parseInt(jonokohtainenTulostieto.varasijat, 10) > 0
+          ) {
+            disclaimer = localize('label.varasijojenMaaraRajattu', {
+              varasijamaara: jonokohtainenTulostieto.varasijat,
+            })
+          } else if (jonokohtainenTulostieto.eiVarasijatayttoa) {
+            disclaimer = localize('label.eiVarasijatayttoa')
+          }
+        }
+        return disclaimer
+      }
+
+      function hyvaksytty(valintatulos) {
+        return valintatulos.valintatila == "HYVAKSYTTY" || valintatulos.valintatila == "HARKINNANVARAISESTI_HYVAKSYTTY" || valintatulos.valintatila == "VARASIJALTA_HYVAKSYTTY"
+      }
+
+      function tilanKuvaus(valintatulos) {
+        return valintatulos.tilanKuvaukset[getLanguage().toUpperCase()]
+      }
+    }
+  }
+}]);
+
+// CONCATENATED MODULE: ./src/main/js/directives/henkilotiedot.js
+
+
+/* harmony default export */ var directives_henkilotiedot = (["restResources", "debounce", "settings", "angularBacon", function (restResources, debounce, settings, angularBacon) {
+  return {
+    restrict: 'E',
+    scope: {
+      application: '=application'
+    },
+    template: __webpack_require__(146),
+    link: function ($scope, element, attrs) {
+      $scope.localization = localize;
+      $scope.yhteystiedot = $scope.application.henkilotiedot
+
+      var postalCode = angularBacon.watch($scope, "yhteystiedot['Postinumero'].answer").debounce(settings.modelDebounce).skipDuplicates().map(".trim")
+      var query = angularBacon.resource(restResources.postOffice.get)
+
+      function length(len) { return function(str) { return str.length === len } }
+      function not(f) { return function(val) { return !f(val) }}
+
+      var responses = postalCode.filter(length(5))
+        .flatMapLatest(function(code) {
+          return query({postalCode: code })
+        })
+
+      responses.onValue(function(response) {
+        $scope.application.calculatedValues.postOffice = response.postOffice
+        $scope.yhteystiedot.Postinumero.setErrors([])
+      })
+
+      responses.onError(function() {
+        $scope.application.calculatedValues.postOffice = ""
+      })
+
+      postalCode.filter(not(length(5))).onValue(function() {
+        $scope.$apply(function() {
+          $scope.application.calculatedValues.postOffice = ""
+        })
+      })
+    }
+  }
+}]);
+
+// CONCATENATED MODULE: ./src/main/js/directives/applicationPeriods.js
+
+
+/* harmony default export */ var applicationPeriods = (function () {
+  return {
+    restrict: 'E',
+    scope: {
+      haku: '&haku'
+    },
+    template: __webpack_require__(145),
+    link: function ($scope, element, attrs) {
+      $scope.localization = localize;
+      $scope.periods = function() { return $scope.haku().applicationPeriods }
+
+      $scope.applicationPeriodString = function(index) {
+        if ($scope.periods().length === 1)
+          return localize("label.applicationPeriod")
+        else
+          return (index+1) + ". " + localize("label.applicationPeriod").toLowerCase()
+      }
+
+      $scope.statusString = function(period) {
+        if (period.active)
+          return localize("label.applicationPeriodActive")
+        else if (period.end < new Date().getTime())
+          return localize("label.applicationPeriodPassed")
+        else
+          return localize("label.applicationPeriodNotStarted")
+      }
+    }
+  }
+});
+
+// CONCATENATED MODULE: ./src/main/js/directives/clearableInput.js
+/* harmony default export */ var clearableInput = (['$parse', function ($parse) {
+  return {
+    link: function (scope, element, attrs) {
+      var wrapper = $("<div/>", { class: "clearable-input" })
+      var clearBtn = $("<div/>", { class: "clear-btn" })
+      var container = element.wrap(wrapper).parent()
+      container.prepend(clearBtn)
+
+      clearBtn.on("click", function() {
+        scope.$apply(function() {
+          var model = $parse(attrs.ngModel)
+          model.assign(scope, "")
+        })
+      })
+
+      scope.$watch(attrs.ngModel, function(val) {
+        clearBtn.toggle(val && (val.length > 0))
+      })
+    }
+  }
+}]);
+
+// CONCATENATED MODULE: ./src/main/js/directives/callout.js
+/* harmony default export */ var callout = (function () {
+  return {
+    link: function (scope, element, attrs) {
+      element.addClass("callout")
+      element.prepend($("<div/>", {class: "callout-close"}))
+      element.on("click", ".callout-close", function () {
+        element.fadeOut("fast")
+      })
+      scope.$on("show-callout", function (evt, calloutId, toggle) {
+        if (attrs.callout == calloutId) {
+          if (toggle)
+            element.fadeIn("fast")
+          else
+            element.fadeOut("fast")
+        }
+      })
+    }
+  }
+});
+
+// CONCATENATED MODULE: ./src/main/components/lasnaoloilmoittautuminen/lasnaoloilmoittautuminen.js
+
+
+/* harmony default export */ var lasnaoloilmoittautuminen = (["restResources", function (restResources) {
+  return {
+    restrict: 'E',
+    scope: {
+      application: '=',
+      tulos: '='
+    },
+    template: __webpack_require__(144),
+    link: function ($scope, element, attrs) {
+      $scope.localization = localize;
+      $scope.states = {
+        // Spring hakus
+        semester: 'LASNA_KOKO_LUKUVUOSI',
+        autumn: 'LASNA_SYKSY',
+
+        // Autumn hakus
+        spring: 'LASNA'
+      };
+      $scope.reserveStates = {
+        LASNA_KOKO_LUKUVUOSI: 'semester',
+        LASNA_SYKSY: 'autumn',
+        LASNA: 'spring'
+      };
+
+      $scope.init = function() {
+        var hakutoive = $scope.application.hakutoiveet.find(function(element) {
+            return element.data['Koulutus-id'] === $scope.tulos.hakukohdeOid;
+        });
+
+        $scope.tulos.koulutuksenAlkaminen = hakutoive.koulutuksenAlkaminen ? hakutoive.koulutuksenAlkaminen : { kausiUri: 'kausi_s#1' };
+
+        $scope.ilmoittautuminen = $scope.reserveStates[$scope.tulos.ilmoittautumistila.ilmoittautumistila];
+        $scope.ilmoittautunut = !!$scope.ilmoittautuminen;
+      }();
+
+      $scope.postLasnaoloilmoittautuminen = function() {
+        $scope.error = false;
+        var body = {
+            hakukohdeOid: $scope.tulos.hakukohdeOid,
+            muokkaaja: '',
+            tila: $scope.states[$scope.ilmoittautuminen],
+            selite: 'Omien sivujen läsnäoloilmoittautuminen'
+        };
+        restResources.lasnaoloilmoittautuminen.save({ hakuOid: $scope.application.haku.oid , hakemusOid: $scope.application.oid }, JSON.stringify(body), onSuccess, onError);
+      };
+
+      $scope.getStateTranslation = function() {
+        return localize('lasnaoloilmoittautuminen.' + $scope.ilmoittautuminen);
+      };
+
+      $scope.getErrorTranslation = function() {
+          return localize('lasnaoloilmoittautuminen.error.' + $scope.error);
+      };
+
+      $scope.schoolStartsInSpring = function () {
+        return $scope.tulos.koulutuksenAlkaminen.kausiUri === 'kausi_k#1'
+      };
+
+      $scope.schoolStartsInAutumn = function () {
+        return $scope.tulos.koulutuksenAlkaminen.kausiUri === 'kausi_s#1'
+      };
+
+      function onSuccess() {
+        $scope.tulos.ilmoittautumistila.ilmoittautumisaika.tehty = new Date();
+        $scope.ilmoittautunut = true;
+      }
+
+      function onError(err) {
+        console.log(err);
+        switch (err.status) {
+          case 401:
+            document.location.replace(window.url("omatsivut.login"));
+            break;
+          case 404:
+            $scope.error = 'notFound';
+            break;
+          default:
+            $scope.error = 'other';
+        }
+      }
+
+      $scope.getEnrolmentMessageKeys = function() {
+        const date = $scope.tulos.ilmoittautumisenAikaleima ? new Date($scope.tulos.ilmoittautumisenAikaleima) : new Date();
+        return {date: date.toLocaleDateString('fi-FI'), time: date.toLocaleTimeString('fi-FI')}
+      };
+    }
+  }
+}]);
+
+// CONCATENATED MODULE: ./src/main/js/controllers/hakutoiveidenMuokkaus.js
+
+
+
+
+/* harmony default export */ var controllers_hakutoiveidenMuokkaus = (['$scope', '$location', '$http', function($scope, $location, $http) {
+
+  const decodedUrl = decodeURIComponent($location.url());
+  const matches = decodedUrl.match(/token\/(.+)/);
+  const token = matches && matches[1];
+  const baseUrl = 'insecure/applications/application/';
+
+  // Ladataan sivu sen jälkeen kun vastaanottotieto on lähetetty
+  $scope.$on("hakutoive-vastaanotettu", function() {
+    loadApplication();
+  });
+
+  $scope.lang = getLanguage();
+  loadApplication();
+
+  $scope.logout = function() {
+    removeBearerToken();
+    $scope.application = null;
+    $scope.loggedOut = true;
+  };
+
+   function loadApplication() {
+    if (token || getBearerToken()) {
+      $scope.loading = true;
+      $location.hash('/').replace();
+      const suffix = token ? 'token/' + token : 'session';
+      $http.get(baseUrl + suffix).then(
+        function (response) {
+          $scope.loading = false;
+          $scope.application = new hakemus_Hakemus(response.data);
+          $scope.application.oiliJwt = response.oiliJwt;
+          $scope.application.token = token;
+          $scope.application.isHakutoiveidenMuokkaus = true;
+          const henkilotiedot = response.data.hakemus.answers.henkilotiedot;
+          $scope.user = {
+            name: henkilotiedot.Kutsumanimi + ' ' + henkilotiedot.Sukunimi
+          }
+        },
+        function (response) {
+          $scope.loading = false;
+          if (404 === response.status) {
+            $scope.errorMessage = 'error.noActiveApplication'
+          } else if (response.data && response.data.error === 'expiredToken') {
+            $scope.infoMessage = 'info.expiredToken'
+          } else if (401 === response.status || 403 === response.status) {
+            $scope.errorMessage = 'error.invalidToken'
+          } else {
+            $scope.errorMessage = 'error.serverError'
+          }
+        })
+    } else {
+      $scope.errorMessage = 'error.noTokenAvailable'
+    }
+  };
+}]);
+
+// CONCATENATED MODULE: ./src/main/js/controllers/additionalQuestionController.js
+
+
+/* harmony default export */ var additionalQuestionController = (["$scope", function($scope) {
+  $scope.localization = localize;
+  $scope.questionAnswered = function() {
+    $scope.$emit("questionAnswered")
+  }
+}]);
+
+// CONCATENATED MODULE: ./src/main/js/controllers/hakutoiveController.js
+
+
+const hakutoiveController_ = __webpack_require__(18);
+
+/* harmony default export */ var hakutoiveController = (["$scope", "$timeout", "settings", "restResources", function($scope, $timeout, settings, restResources) {
+  $scope.isEditingDisabled = function() { return !$scope.hakutoive.isNew || !$scope.application.isEditable($scope.$index) }
+
+  $scope.isKoulutusSelectable = function() { return !$scope.isEditingDisabled() && this.hakutoive.hasOpetuspiste() && !hakutoiveController_.isEmpty($scope.koulutusList) }
+
+  $scope.isLoadingKoulutusList = function() { return !$scope.isEditingDisabled() && this.hakutoive.hasOpetuspiste() && hakutoiveController_.isEmpty($scope.koulutusList) }
+
+  $scope.showNotification = function(type) {
+    var oid = $scope.hakutoive.data["Koulutus-id"]
+    var notificationsForAo = $scope.application.notifications[oid] || {}
+    return notificationsForAo[type]
+  }
+
+  $scope.isNonPrioritizedAndEditable = function () { return this.application.haku.usePriority || $scope.application.isEditable($scope.$index) }
+
+  $scope.opetuspisteValittu = function($item, $model, $label) {
+    this.hakutoive.setOpetuspiste($item.id, $item.name);
+    $scope.koulutusList = [];
+
+    restResources.koulutukset.query({
+      asId: this.application.haku.oid,
+      opetuspisteId: $item.id,
+      baseEducation: this.application.educationBackground.baseEducation,
+      vocational: this.application.educationBackground.vocational,
+      uiLang: getLanguage()
+    }).$promise.then(koulutukset => {
+      $scope.koulutusList = koulutukset;
+      if (koulutukset.length === 1) {
+        $scope.valittuKoulutus = koulutukset[0];
+        $scope.hakutoive.setKoulutus(koulutukset[0]);
+      }
+    })
+  }
+
+  $scope.opetuspisteModified = function() {
+    if (hakutoiveController_.isEmpty(this.hakutoive.data.Opetuspiste))
+      this.hakutoive.clear()
+    else
+      this.hakutoive.removeOpetuspisteData()
+  }
+
+  $scope.removeHakutoive = function(index) {
+    $scope.application.removePreference(index)
+    $scope.application.addPreference(new hakutoive_Hakutoive({}))
+  }
+
+  $scope.canRemovePreference = function(index) {
+    return $scope.application.hasPreference(index) && !$scope.application.preferenceLocked(index)
+  }
+
+  $scope.koulutusValittu = function(valittuKoulutus) {
+    if (valittuKoulutus) {
+      this.hakutoive.setKoulutus(valittuKoulutus);
+    }
+  }
+
+  $scope.findOpetuspiste = function(val) {
+    return restResources.opetuspisteet.query({
+      query: val,
+      asId: $scope.application.haku.oid,
+      lang: getLanguage()
+    }).$promise
+  };
+}]);
+
+// CONCATENATED MODULE: ./src/main/js/app.js
+
+
+
+
+
+
+
+
+
+
+
+__webpack_require__(162);
+__webpack_require__(161);
+
+
+// Services
+
+
+
+
+
+
+// Directives
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Controllers
+
+
+
+
+
+window.moment = js_moment;
+
+__webpack_require__(143);
+__webpack_require__(142);
+
+window.Service = {
+  login: function() {
+    document.location.href = "/omatsivut/login";
+  },
+  logout: function() {
+    document.location.href = "/omatsivut/logout";
+  },
+  getUser: function() {
+    const url = '/omatsivut/session';
+    const headers = new Headers({
+      'Caller-Id': '1.2.246.562.10.00000000001.omatsivut.frontend'
+    });
+    const request = new Request(url, {
+      method: 'GET',
+      headers: headers,
+      credentials: 'same-origin'
+    });
+    return new Promise((resolve, reject) => {
+      fetch(request)
+      .then((response) => {
+        if (response.status === 200) {
+          response.json().then((user) => {
+            resolve(user);
+          })
+        } else {
+          reject(new Error('No session found!'));
+        }
+      }).catch(err => {
+        console.error(err);
+        reject(new Error('Failed to fetch session!'));
+      });
+    });
+  }
+};
+
+const listApp = angular_default.a.module('listApp',
+  [angular_resource_default.a, angular_sanitize_default.a, angular_animate_default.a, angular_cookies_default.a, typeahead_default.a, "RecursionHelper", "debounce", "exceptionOverride"]);
+
+listApp
+  .config(router)
+  .factory('restResources', js_restResources)
+  .factory('angularBacon', services_angularBacon)
+  .factory('applicationValidator', services_applicationValidator)
+  .factory('settings', js_settings)
+  .directive('applicationList', applicationList)
+  .directive('notification', Notification)
+  .directive('confirm', directives_confirm)
+  .directive('question', question)
+  .directive('localizedLink', localizedLink)
+  .directive('formattedTime', formattedTime)
+  .directive('sortable', sortable)
+  .directive('disableClickFocus', disableClickFocus)
+  .directive('application', directives_application)
+  .directive('hakutoiveenVastaanotto', hakutoiveenVastaanotto_HakutoiveenVastaanotto)
+  .directive('ilmoittautuminen', ilmoittautuminen)
+  .directive('kela', kela)
+  .directive('hakutoiveet', directives_hakutoiveet)
+  .directive('valintatulos', directives_valintatulos)
+  .directive('henkilotiedot', directives_henkilotiedot)
+  .directive('applicationPeriods', applicationPeriods)
+  .directive('ignoreDirty', ignoreDirty)
+  .directive('clearableInput', clearableInput)
+  .directive('callout', callout)
+  .directive('lasnaoloilmoittautuminen', lasnaoloilmoittautuminen)
+  .controller('hakutoiveidenMuokkausController', controllers_hakutoiveidenMuokkaus)
+  .controller('additionalQuestionController', additionalQuestionController)
+  .controller('hakutoiveController', hakutoiveController);
+
+listApp.run(['$rootScope', function ($rootScope) {
+  $rootScope.localization = localize;
+}]);
+
+listApp.run(['$http', '$cookies', function($http, $cookies) {
+  $http.defaults.headers.common['Caller-Id'] = "1.2.246.562.10.00000000001.omatsivut.frontend";
+  if($cookies['CSRF']) {
+    $http.defaults.headers.common['CSRF'] = $cookies['CSRF'];
+  }
+}]);
+
+angular_default.a.element(document).ready(
+  init()
+    .then(() => {
+      angular_default.a.bootstrap(document, ['listApp']);
+      document.getElementsByTagName('body')[0].setAttribute('aria-busy', 'false');
+    })
+);
+
+function logExceptionToPiwik(msg, data) {
+  if (typeof _paq === 'undefined' || _paq == null) {
+    console.warn("Piwik not present, cannot log: " + msg + "\n" + data)
+  } else {
+    console.warn(msg + "\n" + data);
+    _paq.push(["trackEvent", document.location, msg, data])
+  }
+}
+
+window.onerror = function(errorMsg, url, lineNumber, columnNumber, exception) {
+  let data = url + ":" + lineNumber;
+  if (typeof columnNumber !== "undefined") data += ":" + columnNumber;
+  if (typeof exception !==  "undefined") data += "\n" + exception.stack;
+  logExceptionToPiwik(errorMsg, data);
+};
+
+angular_default.a.module("exceptionOverride", []).factory("$exceptionHandler", ["$injector", function($injector) {
+  var loggedErrors = [];
+  var skippedErrors = 0;
+  return function (exception, cause) {
+    var $http = $injector.get("$http");
+    var $window = $injector.get("$window");
+    function getBrowserAndVersion() {
+      var N = navigator.appName;
+      var ua = navigator.userAgent;
+      var M = ua.match(/(opera|chrome|safari|firefox|msie)\/?\s*(\.?\d+(\.\d+)*)/i);
+      M = M ? [
+        M[1],
+        M[2]
+      ] : [
+        N,
+        navigator.appVersion,
+        '-?'
+      ];
+      return [M[0],M[1]];
+    }
+    function logToBackend(data, errorId) {
+      loggedErrors.push(errorId);
+      $http.post(window.url("omatsivut.errorlogtobackend"), JSON.stringify(data))
+        .then(function(success){
+            console.log("Error successfully logged to backend, " + success.status);
+          },
+          function(failure) {
+            console.log("Backend call for error logging failed, ", failure.status);
+          });
+    }
+    try {
+
+      var browser = '';
+      var browserVersion = '';
+      try {
+        var bv = getBrowserAndVersion();
+        browser = bv[0];
+        browserVersion = bv[1];
+      } catch (e) {
+        console.log("Something went wrong in deducing browser or browser version: ", e);
+      }
+      var errorMessage = '';
+      var stackTrace = '';
+      if (exception !== undefined) {
+        errorMessage = exception.toString();
+        if(exception.stack !== undefined) {
+          stackTrace = exception.stack.toString();
+        }
+      }
+      var errorInfo = {
+        errorUrl: $window.location.href,
+        errorMessage: errorMessage,
+        stackTrace: stackTrace,
+        cause: cause || '',
+        browser: browser,
+        browserVersion: browserVersion
+      };
+      var errorId = $window.location.href + '---' + errorMessage;
+      if (loggedErrors.indexOf(errorId) !== -1) {
+        console.log("Error with id has already been logged, aborting! ", errorId);
+        skippedErrors += 1;
+        console.log("skipped errors: ", skippedErrors );
+        // älä lähetä, jos jo lokitettu tai lokitus keskeytetty
+        return;
+      } else {
+        if (isTestMode()) {
+          logToBackend(errorInfo, errorId);
+        } else {
+          logToBackend(errorInfo, errorId);
+          logExceptionToPiwik(exception.message, exception.stack);
+        }
+      }
+    } catch (e) {
+        console.log("Error while sending error data to backend: ", e.toString())
+    }
+  };
+}]);
+
+
+/***/ }),
+
+/***/ 142:
+/***/ (function(module, exports) {
+
+window.urls.addProperties({
+  "omatsivut.applications": "/omatsivut/secure/applications",
+  "omatsivut.applications.update": "/omatsivut/secure/applications/:id",
+  "omatsivut.applications.validate": "/omatsivut/secure/applications/validate/$1",
+  "omatsivut.applications.vastaanota": "/omatsivut/secure/applications/vastaanota",
+  "omatsivut.applications.vastaanota.post": "/omatsivut/secure/applications/vastaanota/:hakemusOid/hakukohde/:hakukohdeOid",
+  "omatsivut.postitoimipaikka": "/omatsivut/koodisto/postitoimipaikka/:postalCode",
+  "omatsivut.koulutukset": "/omatsivut/koulutusinformaatio/koulutukset/:asId/:opetuspisteId",
+  "omatsivut.opetuspisteet": "/omatsivut/koulutusinformaatio/opetuspisteet/:query",
+  "omatsivut.translations": "/omatsivut/translations",
+  "omatsivut.login": "/omatsivut/login",
+  "omatsivut.applications.tuloskirje.token": "/omatsivut/tuloskirjeet/$1/tuloskirje.html?hakuOid=$2",
+  "omatsivut.applications.tuloskirje": "/omatsivut/secure/applications/tuloskirje/$1",
+  "omatsivut.lasnaoloilmoittautuminen": "/omatsivut/secure/ilmoittaudu",
+  "omatsivut.errorlogtobackend": "/omatsivut/errorlogtobackend"
+});
+
+
+/***/ }),
+
+/***/ 143:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * window.urls.debugLog().loadFromUrls("suoritusrekisteri-web-frontend-url_properties.json", "rest/v1/properties").success(function(){appInit();})
+ *
+ * window.url("service.info", param1, param2, {key3: value})
+ *
+ * window.urls(baseUrl).url(key, param)
+ * window.urls(baseUrl).noEncode().url(key, param)
+ * window.urls({baseUrl: baseUrl}).omitEmptyValuesFromQuerystring().url(key, param)
+ * window.urls().omitEmptyValuesFromQuerystring().url(key, param)
+ *
+ * Config lookup order: urls_config, window.urls.override, window.urls.properties, window.urls.defaults
+ * Lookup key order:
+ * * for main url window.url's first parameter: "service.info" from all configs
+ * * baseUrl: "service.baseUrl" from all configs and "baseUrl" from all configs
+ *
+ * window.url_properties = {
+ *   "service.status": "/rest/status",
+ *   "service.payment": "/rest/payment/$1",
+ *   "service.order": "/rest/payment/$orderId"
+ *   }
+ *
+ * window.urls.debug = true
+ *
+ */
+
+(function(exportDest) {
+    var version="1.0"
+
+    if(exportDest.urls) {
+        if(exportDest.urls.version !== version)   {
+            console.log("'Mismatching oph_urls.js. First loaded (and in use):", exportDest.urls.version, " second loaded (not in use): ", version)
+        }
+        return
+    }
+
+    exportDest.urls = function() {
+        var urls_config = {}
+        var omitEmptyValuesFromQuerystring = false
+        var encode = true
+
+        for (var i = 0; i < arguments.length;  i++) {
+            var arg = arguments[i]
+            if(typeof arg === "string" || arg == null) {
+                urls_config.baseUrl = arg
+            } else {
+                Object.keys(arg).forEach(function(key){
+                    urls_config[key] = arg[key]
+                })
+            }
+        }
+
+        var resolveConfig = function(key, defaultValue) {
+            var configs = [urls_config, exportDest.urls.override, exportDest.urls.properties, exportDest.urls.defaults]
+            for (var i = 0; i < configs.length; i++) {
+                var c = configs[i]
+                if(c.hasOwnProperty(key)) {
+                    return c[key]
+                }
+            }
+            if(typeof defaultValue == 'function') {
+                return defaultValue()
+            }
+            if(typeof defaultValue == 'undefined') {
+                throw new Error("Could not resolve value for '"+key+"'")
+            }
+            return defaultValue
+        }
+
+        var enc = function(arg) {
+            arg = [undefined, null].indexOf(arg) > -1 ? "" : arg
+            if(encode) {
+                arg = encodeURIComponent(arg)
+            }
+            return arg
+        }
+
+        var includeToQuerystring = function(v) {
+            if(omitEmptyValuesFromQuerystring) {
+                return [undefined, null, ""].indexOf(v) === -1
+            } else {
+                return [undefined].indexOf(v) === -1
+            }
+        }
+
+        var ret = {
+            omitEmptyValuesFromQuerystring: function () {
+                omitEmptyValuesFromQuerystring = true
+                return ret
+            },
+            noEncode: function() {
+                encode = false
+                return ret
+            },
+            url: function () {
+                var key = Array.prototype.shift.apply(arguments)
+                var args = Array.prototype.slice.call(arguments)
+                var queryString = "";
+                var tmpUrl;
+                if (!key) {
+                    throw new Error("first parameter 'key' not defined!");
+                }
+                var url = resolveConfig(key)
+                // reverse iteration because $10 needs to be handled first
+                for (var i = args.length; i > 0; i--) {
+                    var arg = args[i - 1];
+                    if (typeof arg === "object") {
+                        Object.keys(arg).forEach(function (k) {
+                            var originalValue = arg[k];
+                            if(!isArray(originalValue)) {
+                                tmpUrl = url.replace("$" + k, enc(originalValue))
+                            }
+                            if (tmpUrl == url && includeToQuerystring(originalValue)) {
+                                var values = isArray(originalValue) ? originalValue : [originalValue];
+                                for(var j = 0; j < values.length; j++) {
+                                    var separator = (queryString.length > 0) ? "&" : "?";
+                                    var encodedKeyValue = enc(k) + "=" + enc(values[j]);
+                                    queryString = queryString + separator + encodedKeyValue
+                                }
+                            }
+                            url = tmpUrl
+                        })
+                    } else {
+                        url = url.replace("$" + i, enc(arg))
+                    }
+                }
+                var baseUrl = resolveConfig(parseService(key) + ".baseUrl", function () {
+                    return resolveConfig("baseUrl", null)
+                })
+                if (baseUrl) {
+                    url = joinUrl(baseUrl, url)
+                }
+                url = url + queryString
+                debug("url:", key, "->", url)
+                return url
+            }
+        }
+        return ret
+    }
+
+    exportDest.urls.version = version
+    exportDest.urls.properties = {}
+    exportDest.urls.defaults = {}
+    exportDest.urls.override = {}
+    exportDest.urls.debug = false
+    exportDest.urls.debugLog = function() {
+        exportDest.urls.debug = true;
+        return this;
+    }
+    exportDest.urls.addProperties = function (props) {
+        mergePropertiesWithWarning(props, exportDest.urls.properties)
+    }
+    exportDest.urls.addDefaults = function (props) {
+        mergePropertiesWithWarning(props, exportDest.urls.defaults)
+    }
+    exportDest.urls.addOverride = function (props) {
+        mergePropertiesWithWarning(props, exportDest.urls.override)
+    }
+    function mergePropertiesWithWarning(props, destProps) {
+        var existsAlready = Object.keys(props).filter(function (k) {
+            return k in destProps
+        })
+        if(existsAlready.length == 0) {
+            merge(destProps, props)
+        } else {
+            console.log("Url properties already contains following keys:", existsAlready, "existing properties:", destProps, "new properties:", props)
+            alert("Url properties conflict. Check console log")
+        }
+    }
+
+    function debug() {
+        var args = Array.prototype.slice.call(arguments)
+        args.unshift("OphProperties")
+        if(exportDest.urls.debug && exportDest.console && exportDest.console.log) {
+            exportDest.console.log.apply(exportDest.console, args)
+        }
+    }
+
+    function ajaxJson(method, url, onload, onerror) {
+        var oReq = new XMLHttpRequest();
+        oReq.open(method, url, true);
+        oReq.onreadystatechange = function() {
+            if (oReq.readyState == 4) {
+                if(oReq.status == 200) {
+                    if(onload) {
+                        onload(JSON.parse(oReq.responseText))
+                    }
+                } else {
+                    if(onerror) {
+                        onerror(url + " status " +oReq.status + ": " + oReq.responseText)
+                    }
+                }
+            }
+        }
+        oReq.send(null);
+    }
+
+    // minimalist angular Promise implementation, returns object with .success(cb)
+    var successCBs = []
+    var fulfilled = false, fulfillFailed = false
+    var fulfillCount = 0, fulfillCountDest = 0
+    function checkfulfill() {
+        fulfillCount += 1
+        if(fulfillCount == fulfillCountDest) {
+            fulfilled = true
+            if(!fulfillFailed) {
+                successCBs.forEach(function(cb){cb()})
+            }
+        }
+    }
+    exportDest.urls.success = function(cb) {
+        if(fulfilled) {
+            if(!fulfillFailed) {
+                cb()
+            }
+        } else {
+            successCBs.push(cb)
+        }
+    }
+
+    exportDest.urls.loadFromUrls = function() {
+        var args = Array.prototype.slice.call(arguments)
+        var jsonProperties = []
+        successCBs.push(function(){
+            jsonProperties.forEach(function(json){merge(exportDest.urls.properties, json)})
+        })
+        fulfillCountDest += args.length
+        args.forEach(function(url, index){
+            ajaxJson("GET", url, function(data) {
+                jsonProperties.splice(index, 0, data)
+                checkfulfill()
+            }, function() {
+                fulfillFailed = true
+                checkfulfill()
+            })
+        })
+        return {
+            success: exportDest.urls.success
+        };
+    }
+
+    function merge(dest, from) {
+        Object.keys(from).forEach(function(key){
+            dest[key]=from[key];
+        })
+    }
+
+    exportDest.url = exportDest.urls().url
+
+    function parseService (key) {
+        return key.substring(0, key.indexOf("."))
+    }
+
+    function joinUrl() {
+        var args = Array.prototype.slice.call(arguments)
+        if(args.length === 0) {
+            throw new Error("no arguments");
+        }
+        var url = null
+        args.forEach(function(arg) {
+            if(!url) {
+                url = arg
+            } else {
+                var endsWith = url.endsWith("/");
+                var startsWith = arg.startsWith("/");
+                if(endsWith && startsWith) {
+                    url = url + arg.substring(1)
+                } else if(endsWith || startsWith) {
+                    url = url + arg
+                } else {
+                    url = url + "/" + arg
+                }
+            }
+        })
+        return url
+    }
+
+    function isArray(arr) {
+        if(Array.isArray) {
+            return Array.isArray(arr);
+        } else {
+            return arr && arr.constructor === Array;
+        }
+    }
+})(typeof window === 'undefined' ? module.exports : window);
+
+// polyfills for IE
+
+if (!String.prototype.startsWith) {
+    String.prototype.startsWith = function(searchString, position){
+        position = position || 0;
+        return this.substr(position, searchString.length) === searchString;
+    };
+}
+
+if (!String.prototype.endsWith) {
+    String.prototype.endsWith = function(searchString, position) {
+        var subjectString = this.toString();
+        if (typeof position !== 'number' || !isFinite(position) || Math.floor(position) !== position || position > subjectString.length) {
+            position = subjectString.length;
+        }
+        position -= searchString.length;
+        var lastIndex = subjectString.indexOf(searchString, position);
+        return lastIndex !== -1 && lastIndex === position;
+    };
+}
+
+
+/***/ }),
+
+/***/ 144:
+/***/ (function(module, exports) {
+
+module.exports = "<!-- Toisen asteen ilmoittautumislomake -->\n<form class=\"lasnaoloilmoittautuminenForm\" name=\"lasnaoloilmoittautuminenForm\">\n    <fieldset>\n        <div class=\"lasnaolo-ilmoittautuminen\">\n            <span class=\"label-highlight\">{{ localization('lasnaoloilmoittautuminen.title') }} </span>\n            <span> {{ application.henkiloNimi }} </span>\n            <span class=\"tarjoaja-hakukohde\"> - {{ tulos.tarjoajaNimi }} {{ tulos.hakukohdeNimi }} </span>\n        </div>\n        <div ng-hide=\"ilmoittautunut || !application.haku.toisenasteenhaku\">\n            <div class=\"instruction\">{{ localization('lasnaoloilmoittautuminen.info') }}</div>\n\n            <!-- Syksyllä alkavat koulutukset -->\n            <div class=\"check-options\" ng-show=\"schoolStartsInAutumn()\">\n                <label>\n                    <input class=\"oph-checkable-input\" type=\"radio\" name=\"radios\" value=\"semester\" ng-model=\"ilmoittautuminen\">\n                    <span class=\"oph-checkable-text\">{{ localization('lasnaoloilmoittautuminen.semester') }}</span>\n                </label>\n            </div>\n\n            <!-- Keväällä alkavat koulutukset -->\n            <div class=\"check-options\" ng-show=\"schoolStartsInSpring()\">\n                <label>\n                    <input class=\"oph-checkable-input\" type=\"radio\" name=\"radios\" value=\"spring\" ng-model=\"ilmoittautuminen\">\n                    <span class=\"oph-checkable-text\">{{ localization('lasnaoloilmoittautuminen.spring') }}</span>\n                </label>\n            </div>\n\n            <div class=\"save-btn-wrapper\">\n                <button class=\"save-btn\" ng-click=\"postLasnaoloilmoittautuminen()\" ng-disabled=\"!ilmoittautuminen\">{{ localization('lasnaoloilmoittautuminen.send') }}</button>\n            </div>\n            <div class=\"lasnaolo-error\" ng-if=\"error\">\n                {{ getErrorTranslation() }}\n            </div>\n        </div>\n        <div class=\"lasnaolo-confirmation\" ng-if=\"ilmoittautunut\">\n          {{ localization('lasnaoloilmoittautuminen.confirmation', getEnrolmentMessageKeys()) }} {{ getStateTranslation() }}\n        </div>\n    </fieldset>\n</form>\n"
+
+/***/ }),
+
+/***/ 145:
+/***/ (function(module, exports) {
+
+module.exports = "<ul class=\"application-periods\" ng-if=\"haku().active\">\n    <li ng-if=\"periods().length == 1\">\n        {{ localization(\"label.applicationPeriodEnds\") }}\n        <time formatted-time=\"periods()[0].end\" format=\"LLL Z\"/>\n    </li>\n\n    <li ng-repeat=\"applicationPeriod in periods()\" ng-class=\"{inactive: !applicationPeriod.active}\" ng-if=\"periods().length != 1\">\n        {{ $index + 1 }}. {{ localization(\"label.applicationPeriod\").toLowerCase() }}\n        <time formatted-time=\"applicationPeriod.start\" format=\"LLL Z\"/> -\n        <time formatted-time=\"applicationPeriod.end\" format=\"LLL Z\"/>\n        <span class=\"application-period-status\">{{ statusString(applicationPeriod) }}</span>\n    </li>\n</ul>\n"
+
+/***/ }),
+
+/***/ 146:
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"yhteystiedot\">\n    <label>\n        <div class=\"label-column\">{{ localization(\"label.email\")}}</div>\n        <div class=\"value-column\">\n            <input type=\"text\" ng-model=\"yhteystiedot['Sähköposti'].answer\" ng-change=\"yhteystiedot['SähköpostiUudelleen'].answer=yhteystiedot['Sähköposti'].answer\" clearable-input />\n            <span class=\"validation-message error\">{{ yhteystiedot['Sähköposti'].errors.join(', ') }}</span>\n        </div>\n    </label>\n\n    <label>\n        <div class=\"label-column\">{{ localization(\"label.mobilePhone\")}}</div>\n        <div class=\"value-column mobilePhone\"> <input type=\"text\" ng-model=\"yhteystiedot['matkapuhelinnumero1'].answer\" clearable-input />\n            <span class=\"validation-message error\">{{ yhteystiedot['matkapuhelinnumero1'].errors.join(', ') }}</span>\n        </div>\n    </label>\n\n    <div role=\"presentation\" ng-if=\"yhteystiedot['asuinmaa'].answer == 'FIN'\">\n      <label>\n          <div class=\"label-column\">{{ localization(\"label.streetAddress\")}}</div>\n          <div class=\"value-column\"> <input type=\"text\" ng-model=\"yhteystiedot['lahiosoite'].answer\" clearable-input />\n              <span class=\"validation-message error\">{{ yhteystiedot['lahiosoite'].errors.join(', ') }}</span>\n          </div>\n      </label>\n      <label>\n          <div class=\"label-column\">{{ localization(\"label.postalCode\")}}</div>\n          <div class=\"value-column postalCode\">\n              <input type=\"text\" ng-model=\"yhteystiedot['Postinumero'].answer\" clearable-input />\n              <span ng-bind=\"application.calculatedValues.postOffice\"/>\n\n              <span class=\"validation-message error\">{{ yhteystiedot['Postinumero'].errors.join(', ') }}</span>\n          </div>\n      </label>\n    </div>\n</div>\n"
+
+/***/ }),
+
+/***/ 147:
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"hakukohteet\">\n    <div class=\"hakukohteet__header\">\n        <span class=\"hakukohteet__header-text\">{{ localization('label.resultsCaption') }}</span>\n    </div>\n    <div class=\"hakutoive\"\n         ng-repeat=\"hakutoive in valintatulos().hakutoiveet\"\n         ng-class=\"hakutoiveValintatilaStateClass(hakutoive)\">\n        <div class=\"hakutoive__prioriteetti\">\n            <div class=\"hakutoive__prioriteetti--sticky-container\">\n                {{ $index + 1 }}\n            </div>\n        </div>\n        <div class=\"hakutoive-grid\">\n            <div class=\"hakutoive-grid__kuvaus hakutoive-grid__hakutoive-grid-item\">\n                <span class=\"hakutoive-grid__kuvaus--tarjoaja-nimi\">{{ hakutoive.tarjoajaNimi }}</span>\n                <span class=\"hakutoive-grid__kuvaus--hakukohde-nimi\">{{ hakutoive.hakukohdeNimi }}</span>\n            </div>\n            <div class=\"hakutoive-grid__valintatila hakutoive-grid__hakutoive-grid-item\">\n                <div class=\"valintatila\">\n                    <span class=\"valintatila__header\"\n                          ng-if=\"hakutoiveenValintatulosText(hakutoive, valintatulos().hakutoiveet)\">\n                        {{ hakutoiveenValintatulosText(hakutoive, valintatulos().hakutoiveet) }}\n                    </span>\n                    <div class=\"valintatila__tilan-kuvaus\">\n                        <span class=\"valintatila__tilan-kuvaus--item\"\n                              ng-if=\"isHyvaksyttyKesken(hakutoive, valintatulos().hakutoiveet)\">{{ localization('label.acceptedUnfinished.text') }}</span>\n                        <ol class=\"valintatila__tilan-kuvaus--item\"\n                            ng-if=\"isHyvaksyttyKesken(hakutoive, valintatulos().hakutoiveet)\">\n                            <li class=\"valintatila__tilan-kuvaus--item valintatila__tilan-kuvaus--list-item\">{{ localization('label.acceptedUnfinished.rules.1') }}</li>\n                            <li class=\"valintatila__tilan-kuvaus--item valintatila__tilan-kuvaus--list-item\">{{ localization('label.acceptedUnfinished.rules.2') }}</li>\n                        </ol>\n                        <a class=\"valintatila__tilan-kuvaus--item\"\n                           target=\"_blank\"\n                           ng-if=\"isHyvaksyttyKesken(hakutoive, valintatulos().hakutoiveet)\"\n                           href=\"{{ localization('label.acceptedUnfinished.href') }}\">\n                            {{ localization('label.acceptedUnfinished.link') }}\n                        </a>\n                    </div>\n                    <a class=\"valintatila__lisatiedot\"\n                       ng-if=\"hasJonokohtaisetTulostiedot(hakutoive)\"\n                       ng-click=\"toggleJonokohtaisetTulostiedotVisibility(hakutoive)\">\n                        <span class=\"valintatila__lisatiedot-text\">{{ localization('label.moreInformation') }}</span>\n                        <i class=\"zmdi\"\n                           ng-class=\"isJonokohtaisetTulostiedotVisible(hakutoive) ? 'zmdi-chevron-up' : 'zmdi-chevron-down'\"></i>\n                    </a>\n                    <div class=\"valintatila__sitova-vastaanotto-checkbox\"\n                         ng-if=\"hakutoive.vastaanottotila == 'EHDOLLISESTI_VASTAANOTTANUT'\">\n                        <input id=\"{{ 'valintatila__sitova-vastaanotto-checkbox-' + $index }}\"\n                               type=\"checkbox\"\n                               ng-model=\"hakutoive.isSitovaVastaanottoChecked\"\n                               class=\"valintatila__sitova-vastaanotto-checkbox-input\"\n                               ng-disabled=\"vastaanottoSentSuccessfully\"\n                               ignore-dirty>\n                        <label for=\"{{ 'valintatila__sitova-vastaanotto-checkbox-' + $index }}\"\n                               class=\"valintatila__sitova-vastaanotto-checkbox-label\">\n                            {{ localization('label.acceptConditionallyAccepted') }}\n                        </label>\n                    </div>\n                    <div class=\"valintatila__sitova-vastaanotto-button\"\n                         ng-if=\"hakutoive.vastaanottotila == 'EHDOLLISESTI_VASTAANOTTANUT'\">\n                        <input type=\"button\"\n                               class=\"valintatila__sitova-vastaanotto-button-input\"\n                               ng-disabled=\"!hakutoive.isSitovaVastaanottoChecked || ajaxPending || vastaanottoSentSuccessfully\"\n                               ng-click=\"vastaanotaSitovasti(application, hakutoive)\"\n                               value=\"{{ localization('button.confirmChange') }}\">\n                        <div class=\"lds-ellipsis\"\n                             ng-if=\"ajaxPending\">\n                            <div></div><div></div><div></div><div></div>\n                        </div>\n                        <span class=\"valintatila__sitova-vastaanotto-button-error animated fadein\"\n                              ng-if=\"error\">\n                            {{ getError() }}\n                        </span>\n                        <span class=\"valintatila__sitova-vastaanotto-button-warning animated fadeIn\"\n                              ng-if=\"hakutoive.isSitovaVastaanottoChecked\">\n                            {{ localization('label.cannotUndoChanges') }}\n                        </span>\n                    </div>\n                </div>\n            </div>\n            <div class=\"hakutoive-grid__valintatapajonon-valintatapa hakutoive-grid__valintatapajono-grid-item hakutoive-grid__valintatapajono-header\"\n                 ng-if=\"isJonokohtaisetTulostiedotVisible(hakutoive)\">\n                <span class=\"hakutoive-grid__valintatapajono-grid-text\">\n                    {{ localization('label.jonokohtaisetTulostiedot.valintatapa') }}\n                </span>\n            </div>\n            <div class=\"hakutoive-grid__valintatapajonon-pisteet hakutoive-grid__valintatapajono-grid-item hakutoive-grid__valintatapajono-header\"\n                 ng-if=\"isJonokohtaisetTulostiedotVisible(hakutoive)\">\n                <span class=\"hakutoive-grid__valintatapajono-grid-text\">\n                    {{ localization('label.jonokohtaisetTulostiedot.pisteesi') }}\n                </span>\n            </div>\n            <div class=\"hakutoive-grid__valintatapajonon-alimmat-hyvaksytyt-pisteet hakutoive-grid__valintatapajono-grid-item hakutoive-grid__valintatapajono-header\"\n                 ng-if=\"isJonokohtaisetTulostiedotVisible(hakutoive)\">\n                <span class=\"hakutoive-grid__valintatapajono-grid-text\">\n                    {{ localization('label.jonokohtaisetTulostiedot.alimmatHyvaksytytPisteet') }}\n                </span>\n            </div>\n            <div class=\"hakutoive-grid__valintatapajonon-valinnan-tulos hakutoive-grid__valintatapajono-grid-item hakutoive-grid__valintatapajono-header\"\n                 ng-if=\"isJonokohtaisetTulostiedotVisible(hakutoive)\">\n                <span class=\"hakutoive-grid__valintatapajono-grid-text\">\n                    {{ localization('label.jonokohtaisetTulostiedot.valinnanTulos') }}\n                </span>\n            </div>\n            <div class=\"hakutoive-grid__valintatapajonon-valintatapa hakutoive-grid__valintatapajono-grid-item\"\n                 ng-if=\"isJonokohtaisetTulostiedotVisible(hakutoive)\"\n                 ng-repeat-start=\"jonokohtainenTulostieto in sortJonokohtaisetTulostiedot(hakutoive.jonokohtaisetTulostiedot)\">\n                <span class=\"hakutoive-grid__valintatapajono-grid-text\">{{ jonokohtainenTulostieto.nimi }}</span>\n            </div>\n            <div class=\"hakutoive-grid__valintatapajonon-pisteet hakutoive-grid__valintatapajono-grid-item\"\n                 ng-if=\"isJonokohtaisetTulostiedotVisible(hakutoive)\">\n                <span class=\"hakutoive-grid__valintatapajono-grid-text\">{{ jonokohtainenTulostieto.pisteet >= 0 ? jonokohtainenTulostieto.pisteet : '-' }}</span>\n            </div>\n            <div class=\"hakutoive-grid__valintatapajonon-alimmat-hyvaksytyt-pisteet hakutoive-grid__valintatapajono-grid-item\"\n                 ng-if=\"isJonokohtaisetTulostiedotVisible(hakutoive)\">\n                <span class=\"hakutoive-grid__valintatapajono-grid-text\">{{ jonokohtainenTulostieto.alinHyvaksyttyPistemaara >= 0 ? jonokohtainenTulostieto.alinHyvaksyttyPistemaara : '-' }}</span>\n            </div>\n            <div class=\"hakutoive-grid__valintatapajonon-valinnan-tulos hakutoive-grid__valintatapajono-grid-item\"\n                 ng-if=\"isJonokohtaisetTulostiedotVisible(hakutoive)\"\n                 ng-repeat-end>\n                <span class=\"hakutoive-grid__valintatapajono-grid-text\">\n                    {{ localization('label.jonokohtaisetTulostiedot.valintatilat.' + jonokohtainenTulostieto.valintatila) + (jonokohtainenTulostieto.varasijanumero >= 0 ? ': ' + jonokohtainenTulostieto.varasijanumero : '') }}\n                </span>\n                <span class=\"hakutoive-grid__valintatapajono-grid-text hakutoive-grid__valintatapajono-grid-text--grayed-out\"\n                      ng-if=\"getValintatilanKuvaus(jonokohtainenTulostieto)\">\n                    {{ getValintatilanKuvaus(jonokohtainenTulostieto) }}\n                </span>\n                <span class=\"hakutoive-grid__valintatapajono-grid-text hakutoive-grid__valintatapajono-grid-text--grayed-out\"\n                      ng-if=\"getEhdollisenHyvaksymisenEhto(jonokohtainenTulostieto)\">\n                    {{ getEhdollisenHyvaksymisenEhto(jonokohtainenTulostieto) }}\n                </span>\n                <span class=\"hakutoive-grid__valintatapajono-grid-text hakutoive-grid__valintatapajono-grid-text--grayed-out\"\n                      ng-if=\"getVarasijaDisclaimer(jonokohtainenTulostieto)\">\n                    {{ getVarasijaDisclaimer(jonokohtainenTulostieto) }}\n                </span>\n            </div>\n        </div>\n    </div>\n</div>\n"
+
+/***/ }),
+
+/***/ 148:
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"preference-list\" ng-class=\"{validating: validating}\" sortable sortable-item=\".preference-list-item\" sortable-moved=\"movePreference\">\n    <div class=\"overlay\" style=\"background: url(../img/hakemuseditori/ajax-loader.gif) rgba(255,255,255, 0.5) no-repeat center center;\">\n    </div>\n    <div class=\"preference-list-item\" aria-label=\"{{ ($index+1) + '. ' + hakutoive.data.Opetuspiste + ' - ' + hakutoive.data.Koulutus }}\" ng-repeat=\"hakutoive in application.hakutoiveet\" ng-controller=\"hakutoiveController\" ng-class=\"{'inactive': isEditingDisabled() && hakutoive.isNew}\">\n        <div class=\"preference-list-item-layout\" ng-show=\"isNonPrioritizedAndEditable()\">\n\n            <div class=\"item-content\" ng-show=\"application.haku.usePriority\">\n                <span class=\"row-number\">{{$index+1}}</span>\n            </div>\n\n            <div class=\"item-content\">\n                <div class=\"sort-arrow-container\" ng-show=\"application.haku.usePriority\">\n                    <button class=\"sort-arrow-up\" aria-label=\"{{ localization('button.sortUp_ariaLabel') }}\" ng-disabled=\"!application.canMovePreference($index, $index-1)\" disable-click-focus></button>\n                    <button class=\"sort-arrow-down\" aria-label=\"{{ localization('button.sortDown_ariaLabel') }}\" ng-disabled=\"!application.canMovePreference($index, $index+1)\" disable-click-focus></button>\n                </div>\n            </div>\n            <div class=\"item-content\">\n                <div class=\"row opetuspiste\">\n                    <label ng-bind=\"hakutoive.data.Opetuspiste\" ng-show=\"isEditingDisabled()\"></label>\n\n                    <input type=\"text\" ng-change=\"opetuspisteModified()\"\n                           placeholder=\"{{localization('label.chooseLocation')}}\"\n                           ng-model=\"hakutoive.data.Opetuspiste\"\n                           uib-typeahead=\"opetuspiste.name for opetuspiste in findOpetuspiste($viewValue)\"\n                           typeahead-loading=\"loadingLocations\"\n                           typeahead-on-select=\"opetuspisteValittu($item, $model, $label)\"\n                           ng-show=\"!isEditingDisabled()\"/>\n                </div>\n\n                <div class=\"row koulutus\">\n                    <span ng-bind=\"hakutoive.data.Koulutus\" ng-show=\"isEditingDisabled()\"></span>\n\n                    <select ng-model=\"valittuKoulutus\"\n                            ng-options=\"koulutus.name for koulutus in koulutusList\"\n                            ng-change=\"koulutusValittu(valittuKoulutus)\" ng-show=\"isKoulutusSelectable()\">\n                    </select>\n                    <span class=\"instruction ajax-spinner-small\" ng-show=\"isLoadingKoulutusList()\">{{ localization(\"message.loadingData\") }}</span>\n                    <div class=\"validation-message error\" ng-if=\"hakutoive.errors.length\">{{hakutoive.errors.join(', ')}}</div>\n                    <div class=\"alert alert-info aoPaymentNotification\" ng-if=\"hakutoive.showPaymentNotification\">\n                        {{ localization(\"payment.aoNotification\") }}\n                    </div>\n                    <div class=\"alert alert-info baseEducationNotification\" ng-if=\"showNotification('baseEducationConflict')\">\n                        {{ localization(\"info.baseEducationConflict\") }}\n                    </div>\n                </div>\n\n                <div class=\"row hakuaika\" ng-if=\"hakutoive.kohdekohtainenHakuaika != null && !application.preferenceLocked($index)\">\n                    {{ localization('label.applicationPeriodEnds') }} <time formatted-time=\"hakutoive.kohdekohtainenHakuaika.end\" format=\"LLL Z\" />\n                </div>\n            </div>\n\n            <div class=\"item-content\">\n                <div class=\"application-preference-locked\" ng-if=\"application.preferenceLocked($index)\">\n                    {{localization('label.applicationPeriodPassed') }}\n                </div>\n\n                <button ng-show=\"canRemovePreference($index)\" class=\"delete-btn\" disable-click-focus confirm confirm-text=\"{{localization('button.delete_confirm')}}\" confirm-action=\"removeHakutoive($index)\" aria-label=\"{{ localization('button.delete_ariaLabel') }}\"></button>\n            </div>\n        </div>\n    </div>\n</div>\n"
+
+/***/ }),
+
+/***/ 149:
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"fade-transitions\">\n    <header>\n        <strong>{{ localization('registration.opintoetuudet.opintotukihakemus') }}</strong>\n    </header>\n    <a href=\"{{kela()}}\" target=\"_blank\">{{ localization('registration.opintoetuudet.studentFinancialAid') }}</a>\n</div>\n"
+
+/***/ }),
+
+/***/ 150:
+/***/ (function(module, exports) {
+
+module.exports = "<!-- Käydään läpi kaikki hakutoiveet ja luodaan tarvittaessa ulkoiset ilmoittautumislinkit (kk), ilmoittautumiskäli (2.aste) ja\nnäytetään mahdolliset ilmoittautumiset -->\n<div class=\"ilmoittautuminen-item fade-transitions\" ng-repeat=\"tulos in hakukohteet()\">\n\n    <!-- ulkoinen ilmoittautumislinkki, vain kk -->\n    <div class=\"kk-lasnaolo\" ng-if=\"!application.haku.toisenasteenhaku && tulos.ilmoittautumistila.ilmoittauduttavissa && linkkiOK(tulos)\">\n        <header>\n          <strong ng-if=\"tulos.ehdollisestiHyvaksyttavissa\">{{ localization('registration.conditionalAcceptanceTitle') }}</strong>\n          <strong ng-if=\"!tulos.ehdollisestiHyvaksyttavissa\">{{ localization('registration.reminder') }}</strong>\n          <span class=\"tarjoaja-hakukohde\">{{ tulos.tarjoajaNimi }} - {{ tulos.hakukohdeNimi }}\n            <p ng-if=\"ohjeetUudelleOpiskelijalle(tulos.hakukohdeOid)\">\n              <a class=\"ohjeet-uudelle-opiskelijalle\" ng-href=\"{{ohjeetUudelleOpiskelijalle(tulos.hakukohdeOid)}}\" target=\"_blank\">{{ localization('registration.instructionsForNewStudents') }}</a>\n            </p>\n          </span>\n        </header>\n        <span ng-if=\"tulos.ehdollisestiHyvaksyttavissa\">{{ localization('registration.conditionalAcceptanceInfo') }}</span>\n        <span ng-if=\"!tulos.ehdollisestiHyvaksyttavissa\">\n          <p>{{ localization('registration.reminderInfo') }}</p>\n          <a class=\"ilmoittautuminen-linkki\" href=\"{{oili()}}\" target=\"_blank\">{{ localization('registration.goToRegistration') }}</a>\n        </span>\n    </div>\n\n    <!-- ilmoittautumiskäli, 2. aste -->\n    <div class=\"result-list\" ng-if=\"application.haku.toisenasteenhaku && tulos.vastaanottotila === 'VASTAANOTTANUT_SITOVASTI' && !ilmoittautumistietoNaytetaan(tulos)\">\n        <div class=\"result-list-wrap\">\n        <div class=\"result-list-cell flex-100\">\n          <lasnaoloilmoittautuminen application=\"application\" tulos=\"tulos\"/>\n        </div>\n      </div>\n    </div>\n\n    <!-- tieto opintopolkuun rekisteröidystä läsnäoloilmoittautumisesta jos sellainen on-->\n    <div class=\"lasnaolo-ilmoittautuminen-container\" ng-if=\"ilmoittautumistietoNaytetaan(tulos)\">\n      <fieldset>\n        <div class=\"lasnaolo-ilmoittautuminen\">\n          <span class=\"label-highlight\"> {{ application.haku.toisenasteenhaku ?\n            localization('lasnaoloilmoittautuminen.title') : localization('lasnaoloilmoittautuminen.title_kk') }}</span>\n          <span> {{ application.henkiloNimi }} </span>\n          <span class=\"tarjoaja-hakukohde\"> {{ tulos.tarjoajaNimi }} {{ tulos.hakukohdeNimi }}\n            <p ng-if=\"ohjeetUudelleOpiskelijalle(tulos.hakukohdeOid)\">\n              <a class=\"ohjeet-uudelle-opiskelijalle\" ng-href=\"{{ohjeetUudelleOpiskelijalle(tulos.hakukohdeOid)}}\" target=\"_blank\">{{ localization('registration.instructionsForNewStudents') }}</a>\n            </p>\n          </span>\n        </div>\n        <div class=\"lasnaolo-confirmation\" ng-if=\"application.haku.toisenasteenhaku\">\n          {{ localization('lasnaoloilmoittautuminen.confirmation', getEnrolmentMessageKeys(tulos)) }} {{ getStateTranslation(tulos) }}\n        </div>\n        <div class=\"lasnaolo-confirmation\" ng-if=\"!application.haku.toisenasteenhaku\">\n          {{ localization('lasnaoloilmoittautuminen.confirmation_kk') }} {{ getStateTranslation(tulos) }}\n        </div>\n      </fieldset>\n    </div>\n</div>\n"
+
+/***/ }),
+
+/***/ 151:
+/***/ (function(module, exports) {
+
+module.exports = "<form name=\"vastaanottoForm\" novalidate>\n  <div ng-form name=\"innerForm\" class=\"hakutoiveenVastaanotto fade-transitions\" ng-repeat=\"hakutoive in ctrl.hakutoiveet()\">\n      <header class=\"hakutoiveenVastaanotto-caption thumb-up\">\n          <strong>{{ localization('message.acceptEducation.received') }}</strong>\n           {{ hakutoive.tarjoajaNimi }} - {{ hakutoive.hakukohdeNimi }}\n      </header>\n\n      <div class=\"hakutoive-vastaanotettavissa\" ng-if=\"hakutoive.vastaanottoDeadline\">\n           {{ localization('message.acceptEducation.latestAnswer', { aika: ctrl.formatTimestamp(hakutoive.vastaanottoDeadline) }) }}\n      </div>\n      <div class=\"hakutoive-vain-yksi-valittavissa\" ng-if=\"ctrl.haku().showSingleStudyPlaceEnforcement\">\n          {{ localization('message.acceptEducation.onlyOnePossible.1') }}\n          <span class=\"vain-yksi\">{{ localization('message.acceptEducation.onlyOnePossible.2') }}</span>\n          {{ localization('message.acceptEducation.onlyOnePossible.3') }}\n      </div>\n      <div class=\"hakutoive-siirtohaku {{ctrl.siirtohakuClass}}\" ng-if=\"ctrl.haku().korkeakouluhaku && ctrl.haku().siirtohaku\">\n          {{ localization('message.siirtohaku') }}\n      </div>\n\n      <ul class=\"hakutoive-options\">\n          <li>\n            <label>\n              <input type=\"radio\" name=\"vastaanotettavaHakutoive\" value=\"VastaanotaSitovasti\" ng-model=\"ctrl.vastaanottoAction[hakutoive.hakukohdeOid]\" ng-disabled=\"ctrl.isVastaanottoKesken()\" ng-click=\"ctrl.flashSiirtohakuNotification(); ctrl.selectHakukohde(hakutoive.hakukohdeOid)\" />\n              {{ ctrl.haku().toisenasteenhaku ? localization('message.acceptEducation.acceptToinenAste') : localization('message.acceptEducation.accept') }}\n            </label>\n          </li>\n          <li ng-show=\"hakutoive.vastaanotettavuustila == 'VASTAANOTETTAVISSA_EHDOLLISESTI'\">\n              <label>\n              <input type=\"radio\" name=\"vastaanotettavaHakutoive\" value=\"VastaanotaEhdollisesti\"\n                     ng-model=\"ctrl.vastaanottoAction[hakutoive.hakukohdeOid]\" ng-disabled=\"ctrl.isVastaanottoKesken()\" ng-click=\"ctrl.selectHakukohde(hakutoive.hakukohdeOid)\"/>\n                {{ localization('message.acceptEducation.conditionalAccept') }}\n              </label>\n              <ul class=\"info\">\n                  <li>{{ localization('message.acceptEducation.conditionalAcceptInfo1') }}</li>\n                  <li>{{ localization('message.acceptEducation.conditionalAcceptInfo2') }}</li>\n              </ul>\n          </li>\n          <li>\n            <label>\n              <input type=\"radio\" name=\"vastaanotettavaHakutoive\" value=\"Peru\" ng-model=\"ctrl.vastaanottoAction[hakutoive.hakukohdeOid]\" ng-disabled=\"ctrl.isVastaanottoKesken()\" ng-click=\"ctrl.selectHakukohde(hakutoive.hakukohdeOid)\"/>\n              {{ localization('message.acceptEducation.reject') }}\n            </label>\n          </li>\n          <li ng-if=\"ctrl.vastaanottoAction[hakutoive.hakukohdeOid] === 'Peru' && ctrl.isKkHaku()\">\n            <label>\n              <input type=\"checkbox\" name=\"confirmRejection\" ng-model=\"ctrl.confirmCancelAction\"/>\n              {{ localization('message.acceptEducation.confirmReject') }}\n            </label>\n          </li>\n      </ul>\n\n      <div>\n          <span class=\"ajax-spinner\" ng-show=\"ctrl.ajaxPending\"></span>\n          <button class=\"vastaanota-btn\" disable-click-focus\n                  ng-click=\"ctrl.vastaanotaHakutoive(hakutoive)\"\n                  ng-disabled=\"ctrl.isNotVastaanotettavissa(hakutoive.hakukohdeOid)\"\n                  aria-label=\"{{ localization('button.vastaanota_ariaLabel') }}\"\n                  ng-bind=\"localization('button.vastaanota')\">\n          </button>\n          <span ng-if=\"!ctrl.vastaanottoSentSuccessfully && !ctrl.haku().toisenasteenhaku\" class=\"status-message note\">\n              {{ localization('message.acceptEducation.cannotChangeAnswer') }}\n          </span>\n          <span ng-if=\"ctrl.vastaanottoSentSuccessfully\" class=\"status-message success\">\n              {{ localization('message.acceptEducation.responseReceived') }}\n          </span>\n          <span ng-bind=\"ctrl.error\" class=\"status-message error\" ></span>\n      </div>\n  </div>\n</form>\n"
+
+/***/ }),
+
+/***/ 153:
+/***/ (function(module, exports, __webpack_require__) {
+
+var map = {
+	"./en-gb": 71,
+	"./en-gb.js": 71,
+	"./fi": 70,
+	"./fi.js": 70,
+	"./sv": 69,
+	"./sv.js": 69
+};
+
+
+function webpackContext(req) {
+	var id = webpackContextResolve(req);
+	return __webpack_require__(id);
+}
+function webpackContextResolve(req) {
+	var id = map[req];
+	if(!(id + 1)) { // check for number or string
+		var e = new Error("Cannot find module '" + req + "'");
+		e.code = 'MODULE_NOT_FOUND';
+		throw e;
+	}
+	return id;
+}
+webpackContext.keys = function webpackContextKeys() {
+	return Object.keys(map);
+};
+webpackContext.resolve = webpackContextResolve;
+module.exports = webpackContext;
+webpackContext.id = 153;
+
+/***/ }),
+
+/***/ 155:
+/***/ (function(module, exports) {
+
+module.exports = "<div role=\"presentation\" class=\"hakemuseditori\">\n    <section class=\"application-header\">\n        <h2>{{application.haku.name }}</h2>\n\n        <application-periods haku=\"application.haku\"></application-periods>\n\n        <div class=\"timestamp-row\" ng-show=\"application.haku.jarjestelmanHakulomake || application.hakemusSource === 'Ataru'\">\n            <i ng-if=\"application.previewUrl\" aria-hidden=\"true\" class=\"icon-doc-text\"></i>\n            <a ng-if=\"application.previewUrl\"\n               ng-href=\"{{ application.previewUrl }}\"\n               ng-class=\"{disabled: applicationForm.$dirty|| statusMessageType=='pending' || isValidating}\"\n               target=\"_blank\">{{ localization('button.showApplication') }}</a>\n            <span ng-if=\"application.tuloskirje && application.tuloskirje.createdDate\">\n                <span class=\"delimiter\"> | </span>\n                <a class=\"tuloskirje\"\n                   ng-href=\"{{ application.token ? url('omatsivut.applications.tuloskirje.token',application.token,application.haku.oid) : url('omatsivut.applications.tuloskirje',application.haku.oid) }}\"\n                   ng-show=\"application.hasForm\" ng-class=\"{disabled: applicationForm.$dirty|| statusMessageType=='pending' || isValidating}\" target=\"_blank\">\n                    {{ localization('button.downloadLetter', {\n                    luotu: application.tuloskirje.createdDate\n                    }) }}\n                </a>\n            </span>\n            <span class=\"timestamp\" ng-if=\"false\" ng-class=\"{disabled: form.$dirty || statusMessageType=='pending' || isValidating}\">\n                {{ timestampLabel() }} <time formatted-time=\"application.updated\" format=\"LLL Z\" />\n            </span>\n            <div callout=\"attachments\"\n                 ng-if=\"application.previewUrl\">\n                <localized-link key=\"message.rememberSendAttachments\"\n                                href=\"{{ application.previewUrl + '#liitteet' }}\"\n                                target=\"_blank\">\n                </localized-link>\n            </div>\n        </div>\n    </section>\n\n    <section class=\"application-status\" role=\"presentation\">\n        <div class=\"application-status-item\" ng-if=\"!application.haku.active && application.state.id != 'HAKUKIERROSPAATTYNYT' && !application.allResultsAvailable() && application.vastaanotettavatHakutoiveet().length == 0\">\n            {{ localization('label.applicationPeriodEnded') }}\n            <span ng-if=\"application.haku.aikataulu.julkistus\">\n                {{ localization('label.resultsPublishedDate') }} <time formatted-time=\"application.haku.aikataulu.julkistus.end\" format=\"LL\" />.\n            </span>\n        </div>\n\n        <div class=\"application-status-item\" ng-if=\"application.state.id == 'HAKUKIERROSPAATTYNYT'\">\n            {{ localization('label.applicationRoundEnded') }}\n        </div>\n\n        <div class=\"application-status-item\" ng-if=\"application.haku.active && (application.state.id == 'POSTPROCESSING' || application.state.id == 'SUBMITTED')\">\n            {{ localization(\"message.applicationIsInPostProcessing\") }}\n        </div>\n\n        <div class=\"paymentStatus\">\n            <div ng-if=\"application.requiredPaymentState == 'OK'\" class=\"alert alert-success\">\n                {{ localization(\"payment.status.ok\") }}\n            </div>\n            <div ng-if=\"application.requiredPaymentState == 'NOTIFIED'\" class=\"alert alert-info\">\n                {{ localization(\"payment.status.notified\") }}\n            </div>\n            <div ng-if=\"application.requiredPaymentState == 'NOT_OK'\" class=\"alert alert-danger\">\n                {{ localization(\"payment.status.notOk\") }}\n            </div>\n        </div>\n    </section>\n\n    <section class=\"hakutoiveen-vastaanotto\" ng-if=\"application.vastaanotettavatHakutoiveet().length > 0\">\n        <hakutoiveen-vastaanotto\n                application-oid=\"application.oid\"\n                haku=\"application.haku\"\n                hakutoiveet=\"application.vastaanotettavatHakutoiveet()\"\n                callback=\"hakutoiveVastaanotettu\"\n        ></hakutoiveen-vastaanotto>\n    </section>\n\n    <section class=\"ilmoittautuminen\">\n        <ilmoittautuminen hakukohteet=\"application.ilmoittautumisLinkit()\"\n                          oili=\"application.oiliUrl()\"\n                          application=\"application\">\n        </ilmoittautuminen>\n        <kela ng-show=\"application.kelaURL()\" kela=\"application.kelaURL()\">\n        </kela>\n    </section>\n\n    <form name=\"applicationForm\" novalidate>\n\n        <section class=\"application-section application-valintatulos-error\" ng-if=\"!application.resultFetchedSuccessfully()\">\n            <span role=\"status\" class=\"status-message error\">{{ localization(\"error.valintatulosFailed\") }}</span>\n        </section>\n\n        <section class=\"application-section application-valintatulos\" ng-if=\"application.resultFetchedSuccessfully() &&\n                                                                             application.hasSomeResults() &&\n                                                                             (application.hasSomeNonKeskenResults() || !application.editHakutoiveetEnabled())\">\n            <valintatulos\n                    application=\"application\"\n                    data=\"application.state.valintatulos\"\n                    final=\"application.allResultsAvailable()\"\n                    callback=\"hakutoiveVastaanotettu\"\n            ></valintatulos>\n        </section>\n\n        <section ng-show=\"application.hasForm\" class=\"application-section hakutoiveet\" ng-if=\"application.editHakutoiveetEnabled()\">\n            <header class=\"application-section-heading\">\n                <span>{{ localization('label.preferences') }}</span>\n                <button class=\"save-btn\" ng-hide=\"application.applicationPeriodsInactive()\" ng-disabled=\"shouldSaveButtonBeDisabled()\" ng-click=\"saveApplication()\">{{ localization('button.save') }}</button>\n                <span role=\"status\" class=\"status-message\" ng-class=\"statusMessageStyleModifier()\" ng-bind=\"statusMessage\"></span>\n            </header>\n\n              <hakutoiveet application=\"application\" preference-moved=\"preferenceMoved\" validating=\"isValidating\">\n              </hakutoiveet>\n          </section>\n\n        <section ng-show=\"application.hasForm\" class=\"application-section additional-questions\" ng-if=\"application.editHakutoiveetEnabled() && application.additionalQuestions.questionNodes.length > 0\">\n            <question question-node=\"application.additionalQuestions\" application=\"application\" class=\"questions\" level=\"-1\">\n            </question>\n        </section>\n\n        <section ng-show=\"application.hasForm && !application.isHakutoiveidenMuokkaus\" class=\"application-section henkilotiedot\" ng-if=\"application.editHenkilotiedotEnabled()\">\n            <header class=\"application-section-heading\">\n                {{ localization('label.contactDetails') }}\n            </header>\n\n            <henkilotiedot application=\"application\">\n            </henkilotiedot>\n            <header class=\"application-section-heading\" ng-if=\"!application.editHakutoiveetEnabled()\">\n                <button class=\"save-btn\" ng-disabled=\"shouldSaveButtonBeDisabled()\" ng-click=\"saveApplication()\">{{ localization('button.save') }}</button>\n                <span role=\"status\" class=\"status-message\" ng-class=\"statusMessageStyleModifier()\" ng-bind=\"statusMessage\"></span>\n            </header>\n        </section>\n        <section ng-show=\"application.hasForm\" class=\"application-section application-footer\" ng-if=\"application.editHakutoiveetEnabled()\">\n            <header class=\"application-section-heading\">\n                <button class=\"save-btn\" ng-disabled=\"shouldSaveButtonBeDisabled()\" ng-click=\"saveApplication()\">{{ localization('button.save') }}</button>\n                <span role=\"status\" class=\"status-message\" ng-class=\"statusMessageStyleModifier()\" ng-bind=\"statusMessage\"></span>\n            </header>\n        </section>\n    </form>\n</div>\n"
+
+/***/ }),
+
+/***/ 156:
+/***/ (function(module, exports) {
+
+module.exports = "<div ng-switch=\"isGroup()\" ng-controller=\"additionalQuestionController\">\n    <div ng-switch-when=\"true\" class=\"question-group\">\n        <div ng-if=\"level == 0\" class=\"application-section-heading\">\n            <span ng-show=\"questionNode.title.length > 0\">{{localization(\"label.questionGroupWithTitle\")}}:</span>\n            <span ng-show=\"questionNode.title.length == 0\">{{localization(\"label.questionGroupWithoutTitle\")}}:</span>\n            {{ questionNode.title }}\n        </div>\n        <label ng-if=\"level > 0\" class=\"question-group-title\">{{ questionNode.title }}:</label>\n\n        <div ng-class=\"{ 'question-group-indent': level > 0, 'question-group-section': level == 0 }\" ng-repeat=\"subItem in questionNode.questionNodes\">\n            <question question-node=\"subItem\" application=\"application\" level=\"level+1\">\n            </question>\n        </div>\n    </div>\n\n    <div ng-switch-when=\"false\" class=\"question\">\n        <div class=\"infoText\" ng-if=\"questionNode.questionType === 'RichText'\" ng-bind-html=\"questionNode.title\"></div>\n        <label ng-if=\"questionNode.questionType !== 'RichText'\" class=\"title\" ng-bind-html=\"questionNode.title\"></label>\n        <i class=\"icon-info-circled verboseHelp\" ng-if=\"questionNode.verboseHelp\" title=\"{{questionNode.verboseHelp}}\"></i>\n        <span class=\"validation-message error\">{{ questionNode.errors.join(', ') }}</span>\n        <div class=\"instruction helptext\" ng-if=\"questionNode.help\" ng-bind-html=\"questionNode.help\"></div>\n\n        <span class=\"answer\"\n              ng-init=\"questionType = questionNode.questionType === 'Text' && questionNode.maxlength > 100 ? 'TextArea' : questionNode.questionType\"\n              ng-switch=\"questionType\">\n            <input id=\"{{questionNode.id.questionId}}\" type=\"text\"\n                   ng-switch-when=\"Text\"\n                   ng-blur=\"questionAnswered()\"\n                   ng-model=\"questionNode.answer\"\n                   maxlength=\"{{questionNode.maxlength}}\"/>\n            <textarea id=\"{{questionNode.id.questionId}}\"\n                      ng-switch-when=\"TextArea\"\n                      ng-model=\"questionNode.answer\"\n                      ng-blur=\"questionAnswered()\"\n                      maxlength=\"{{questionNode.maxlength}}\"\n                      rows=\"{{questionNode.rows || 4}}\"\n                      cols=\"{{questionNode.cols || 80}}\"\n                    />\n            <select ng-switch-when=\"Dropdown\"\n                    ng-model=\"questionNode.answer\"\n                    ng-options=\"option.value as option.title for option in questionNode.options\"\n                    ng-change=\"questionAnswered()\">\n            </select>\n\n            <div ng-switch-when=\"Radio\">\n                <label class=\"radio-button-item\" ng-repeat=\"option in questionNode.options\">\n                    <input name=\"{{questionNode.id.questionId}}\" type=\"radio\"\n                           ng-model=\"questionNode.answer\"\n                           ng-change=\"questionAnswered()\"\n                           value={{option.value}} />\n                    <span ng-bind-html=\"option.title\"></span>\n                </label>\n            </div>\n\n            <div ng-switch-when=\"Checkbox\">\n                <label class=\"radio-button-item\" ng-repeat=\"option in questionNode.options\">\n                    <input type=\"checkbox\"\n                           ng-change=\"questionAnswered()\"\n                           ng-model=\"questionNode.answer[option.value]\">\n                    <span ng-bind-html=\"option.title\"></span>\n                </label>\n            </div>\n        </span>\n    </div>\n</div>\n"
+
+/***/ }),
+
+/***/ 157:
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"notification\" ng-if=\"visible\">\n    <img ng-click=\"close()\" src=\"img/close.png\" class=\"close\">\n    <div ng-bind-html=\"message\"></div>\n</div>"
+
+/***/ }),
+
+/***/ 158:
+/***/ (function(module, exports) {
+
+module.exports = "<div role=\"presentation\" id=\"appRoot\">\n\n  <p ng-if=\"localization('message.generalNotification') != 'none'\">{{ localization('message.generalNotification') }}</p>\n\n  <h1>{{ localization('title.omatHakemukset') }}</h1>\n\n  <div class=\"application-list-status\"\n       ng-if=\"applicationStatusMessage.length > 0\"\n       ng-class=\"applicationStatusMessageType\" ng-cloak\n       role=\"status\">\n      <span>\n          {{ localization(applicationStatusMessage) }}\n      </span>\n  </div>\n\n\n    <p class=\"application-list_ataru-applications-not-loaded\"\n       ng-if=\"!allApplicationsFetched && applicationStatusMessage == ''\">{{ localization('info.allApplicationsNotFetched') }}</p>\n\n  <ul id=\"hakemus-list\" aria-label=\"{{ localization('title.omatHakemukset') }}\" ng-cloak>\n      <li ng-repeat=\"application in applications\" class=\"application\" data-oid=\"{{application.oid}}\">\n          <application application=\"application\"></application>\n      </li>\n  </ul>\n</div>\n"
+
+/***/ }),
+
+/***/ 161:
+/***/ (function(module, exports) {
+
+angular.module('debounce', [])
+  .service('debounce', ['$timeout', function ($timeout) {
+    return function (func, wait, immediate) {
+      var timeout, args, context, result;
+      function debounce() {
+        /* jshint validthis:true */
+        context = this;
+        args = arguments;
+        var later = function () {
+          timeout = null;
+          if (!immediate) {
+            result = func.apply(context, args);
+          }
+        };
+        var callNow = immediate && !timeout;
+        if (timeout) {
+          $timeout.cancel(timeout);
+        }
+        timeout = $timeout(later, wait);
+        if (callNow) {
+          result = func.apply(context, args);
+        }
+        return result;
+      }
+      debounce.cancel = function () {
+        $timeout.cancel(timeout);
+        timeout = null;
+      };
+      return debounce;
+    };
+  }])
+
+/***/ }),
+
+/***/ 162:
+/***/ (function(module, exports) {
+
+/*
+ * An Angular service which helps with creating recursive directives.
+ * @author Mark Lagendijk
+ * @license MIT
+ */
+angular.module('RecursionHelper', []).factory('RecursionHelper', ['$compile', function($compile){
+  return {
+    /**
+     * Manually compiles the element, fixing the recursion loop.
+     * @param element
+     * @param [link] A post-link function, or an object with function(s) registered via pre and post properties.
+     * @returns An object containing the linking functions.
+     */
+    compile: function(element, link){
+      // Normalize the link parameter
+      if(angular.isFunction(link)){
+        link = { post: link };
+      }
+
+      // Break the recursion loop by removing the contents
+      var contents = element.contents().remove();
+      var compiledContents;
+      return {
+        pre: (link && link.pre) ? link.pre : null,
+        /**
+         * Compiles and re-adds the contents
+         */
+        post: function(scope, element){
+          // Compile the contents
+          if(!compiledContents){
+            compiledContents = $compile(contents);
+          }
+          // Re-add the compiled contents to the element
+          compiledContents(scope, function(clone){
+            element.append(clone);
+          });
+
+          // Call the post-linking function, if any
+          if(link && link.post){
+            link.post.apply(null, arguments);
+          }
+        }
+      };
+    }
+  };
+}]);
+
+/***/ }),
+
+/***/ 163:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "css/preview.css";
+
+/***/ }),
+
+/***/ 164:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "css/hakutoiveidenMuokkaus.css";
+
+/***/ }),
+
+/***/ 165:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "css/main.css";
+
+/***/ })
+
+/******/ });
+//# sourceMappingURL=index.bundle.js.map

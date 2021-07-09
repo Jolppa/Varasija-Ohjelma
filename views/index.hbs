@@ -24,14 +24,22 @@
       </div>
     </div>
     <div class="container">
+      <h1>Mode: {{env}}</h1>
       <h3>
         <a href="/refresh">PÄIVITÄ</a>
       </h3>
 
       <h1 class="varasija">Olet varasijalla:
-        {{#if data}}{{data.varasija}}{{else}}EI DATAA{{/if}}</h1>
+        {{#if data}}{{data.varasija}}{{else}}EI DATAA{{/if}}
+        {{#if varasija_erotus}}<div
+            class="varasija_erotus"
+          >({{varasija_erotus}})</div>{{/if}}
+      </h1>
       <h1 class="paikka">Paikkoja jäljellä:
-        {{#if data}}{{data.paikkoja_jäljellä}}{{else}}EI DATAA{{/if}}</h1>
+        {{#if data}}{{data.paikkoja_jäljellä}}{{else}}EI DATAA{{/if}}
+        {{#if paikkojen_erotus}}
+          <div class="paikkojen_erotus">({{paikkojen_erotus}})</div>{{/if}}
+      </h1>
       <h3 class="päivitetty">viimeksi päivitetty:
         {{#if data}}{{data.päivämäärä}}{{else}}EI DATAA{{/if}}
       </h3>

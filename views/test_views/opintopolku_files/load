@@ -1,0 +1,9 @@
+if (document.location.hash.indexOf("skipRaamit") < 0) {
+  var raamit = document.getElementById("apply-raamit");
+  if(!raamit) {
+      raamit = document.createElement("script");
+      raamit.id = "apply-raamit";
+      raamit.src = "/oppija-raamit/js/apply-raamit.js";
+      document.getElementsByTagName("head")[0].appendChild(raamit);
+  }
+}

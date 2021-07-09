@@ -21,6 +21,7 @@
     "content-type": "^1.0.4",
     "cookie": "^0.4.0",
     "cookie-signature": "^1.0.6",
+    "cross-env": "^7.0.3",
     "dateformat": "^4.5.1",
     "debug": "^2.6.9",
     "depd": "^1.1.2",
@@ -68,6 +69,7 @@
     "negotiator": "^0.6.2",
     "neo-async": "^2.6.2",
     "node-fetch": "^2.6.1",
+    "nodemon": "^2.0.9",
     "on-finished": "^2.3.0",
     "once": "^1.4.0",
     "p-limit": "^2.3.0",
@@ -117,7 +119,8 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "cross-env NODE_ENV=production node app.js",
+    "dev": "cross-env NODE_ENV=development nodemon app.js"
   },
   "author": "Jolppa",
   "license": "ISC"

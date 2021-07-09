@@ -1,8 +1,13 @@
 const express = require("express");
 const exphbs = require("express-handlebars");
 const path = require("path");
-const dotenv = require("dotenv").config({ path: "./util/secrets.env" });
+let dotenv;
 
+process.env.NODE_ENV === "development"
+  ? (dotenv = require("dotenv").config({ path: "./util/test_Secrets.env" }))
+  : (dotenv = require("dotenv").config({ path: "./util/secrets.env" }));
+
+console.log(`Current environment: ${process.env.NODE_ENV}`);
 const database = require("./util/database");
 const app = express();
 

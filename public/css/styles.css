@@ -23,7 +23,12 @@ body {
   left: 0;
   z-index: 100;
   opacity: 0.5;
+  /* opacity: 1; */
   display: flex;
+}
+
+.test_mask {
+  opacity: 0.5;
 }
 
 .hidden {
@@ -50,6 +55,14 @@ body {
 
 .errorMsg {
   color: red;
+}
+
+.varasija_erotus {
+  display: inline;
+}
+
+.paikkojen_erotus {
+  display: inline;
 }
 
 .statusBox > p > span {

@@ -20,9 +20,9 @@ exports.getIndex = async (req, res, next) => {
 exports.refreshData = async (req, res, next) => {
   try {
     console.log("Refreshing data...");
-    const browser = await puppeteer.launch({
-      /* devtools: true */
-    });
+    let options;
+    env === "DEMO" && (options = {headless: false, defaultViewport: null, args: ["--start-fullscreen"]});
+    const browser = await puppeteer.launch(options);
     const page = await browser.newPage();
     page.on("dialog", async (dialog) => {
       await page.waitForTimeout(6000);
@@ -30,6 +30,8 @@ exports.refreshData = async (req, res, next) => {
     });
     let data = await Data.findOne({});
     // console.log(data);
+
+
     // Parse Opintopolku
 
     const login_btn =
@@ -53,8 +55,7 @@ exports.refreshData = async (req, res, next) => {
         alert(
           "Here we would be giving my bank account info to verify it's me, but I'm just going to load the offline page, where we are going to parse the information..."
         );
-      });
-      console.log("asdasdasd");
+      });      
       await page.goto(`file:${path.join(test_views_dir, "opintopolku.html")}`, {
         waitUntil: "networkidle2",
       });
@@ -77,6 +78,8 @@ exports.refreshData = async (req, res, next) => {
     console.log(varasija);
 
     // Parse xlsb
+    //! For some reason, sometimes the script doesn't find the elements that it needs to click, so we get a timeout.
+    //! Parsing the xlsb has been really pain in the ass, but it works somewhat ok, so I'll leave it as is for now...
     await page.goto(
       "https://vipunen.fi/fi-fi/_layouts/15/xlviewer.aspx?id=/fi-fi/Raportit/Haku%20ja%20valinta%20-%20korkeakoulu%20%20-%20live.xlsb",
       { waitUntil: "load" }
@@ -139,6 +142,16 @@ exports.refreshData = async (req, res, next) => {
     console.log(`Paikkoja jäljellä: ${paikkoja_jäljellä}`);
     let päivämäärä = dateformat(undefined, "dd.mm.yy, HH:MM:ss");
     await browser.close();
+
+    if(env === "development") {
+      paikkoja_jäljellä = Math.floor(Math.random() * paikkoja_jäljellä);
+      varasija = Math.floor(Math.random() * paikkoja_jäljellä);
+
+      if(paikkoja_jäljellä <= 0 || varasija <= 0) {
+        paikkoja_jäljellä = 50;
+        varasija = 50;
+      }
+    }
 
     let varasija_erotus = String(varasija - data.varasija);
     let paikkojen_erotus = String(paikkoja_jäljellä - data.paikkoja_jäljellä);

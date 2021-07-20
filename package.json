@@ -120,7 +120,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cross-env NODE_ENV=production node app.js",
-    "dev": "cross-env NODE_ENV=development nodemon app.js"
+    "demo": "cross-env NODE_ENV=DEMO nodemon app.js"
   },
   "author": "Jolppa",
   "license": "ISC"

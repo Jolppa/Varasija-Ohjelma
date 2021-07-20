@@ -5,7 +5,7 @@ const database = require("./util/database");
 const app = express();
 let dotenv;
 
-process.env.NODE_ENV === "development"
+process.env.NODE_ENV === "DEMO"
   ? (dotenv = require("dotenv").config({ path: "./util/test_Secrets.env" }))
   : (dotenv = require("dotenv").config({ path: "./util/secrets.env" }));
 

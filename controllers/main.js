@@ -21,7 +21,7 @@ exports.refreshData = async (req, res, next) => {
   try {
     console.log("Refreshing data...");
     const browser = await puppeteer.launch({
-      devtools: true,
+      /* devtools: true */
     });
     const page = await browser.newPage();
     page.on("dialog", async (dialog) => {
@@ -34,8 +34,6 @@ exports.refreshData = async (req, res, next) => {
 
     const login_btn =
       "#content > div.Selection__flex-container___3uq7T > div:nth-child(1) > div.SelectionItem__link-container___33-f4 > a";
-    const avainlukulista_btn =
-      "#opidentityprovider-container > section > form > div:nth-child(1) > div.ds-form-row__item.ds-col.ds-col--sm-8 > div > div:nth-child(2) > label";
     const turku_varasija_selector =
       "#hakemus-list > li > application > div > form > section > valintatulos > div > div:nth-child(2) > div.hakutoive-grid > div.hakutoive-grid__valintatila.hakutoive-grid__hakutoive-grid-item > div > span";
     await page.goto("https://opintopolku.fi/oma-opintopolku/");
@@ -66,7 +64,6 @@ exports.refreshData = async (req, res, next) => {
       await page.type("#auth-device-userid-mobilekey", process.env.OP_USERNAME);
       await page.click("#auth-device-submit-mobilekey");
 
-      // await page.waitForNavigation({ waitUntil: "networkidle2" });
       await page.waitForSelector("#continue-button", { visible: true });
 
       await page.click("#continue-button");
@@ -78,18 +75,6 @@ exports.refreshData = async (req, res, next) => {
     varasija = +varasija.match(/\d+/g)[0];
 
     console.log(varasija);
-
-    //! Will add my keys later so I don't have to verify myself from my phone everytime
-    // {
-    //   await page.waitForSelector(avainlukulista_btn);
-    //   await page.click(avainlukulista_btn);
-    //   await page.focus("#auth-device-userid-kr");
-    //   await page.type("#auth-device-userid-kr", process.env.OP_USERNAME);
-    //   await page.focus("#auth-device-password-kr");
-    //   await page.type("#auth-device-password-kr", process.env.OP_PASSWORD);
-    // }
-
-    // await page.waitForTimeout(600000);
 
     // Parse xlsb
     await page.goto(
@@ -160,10 +145,6 @@ exports.refreshData = async (req, res, next) => {
 
     console.log(`Erotukset: ${[varasija_erotus, paikkojen_erotus]}`);
 
-    // if (data) {
-    //   varasija_erotus = data.varasija - varasija;
-    //   paikkojen_erotus = data.paikkoja_jäljellä - paikkoja_jäljellä;
-    // }
     data = { varasija, paikkoja_jäljellä, päivämäärä };
     !Data.findOne({})
       ? await new Data(data).save()
